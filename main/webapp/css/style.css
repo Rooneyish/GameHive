@@ -1,0 +1,114 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Maitree:wght@200;300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  5. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  6. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+/*
+  7. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/*
+  8. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+:root {
+  --primary-color: #000000;
+  --secondary-color: #1C1C1C;
+  --primaryF-color: #FF6F00 ;
+  --secondaryF-color:#FF9900 ; 
+  --text-color: #FFFFFF;
+  --primary-font: "Julius Sans One", sans-serif;
+  --tertiary-font: "Noto Sans", sans-serif;
+  --secondary-font:  "Maitree", serif;
+}
+
+.container{
+	max-width: 1400px;
+	margin:auto;
+}
+
+ul li{
+	list-style: none;
+	text-decoration: none;
+}
+
+ul li a{
+	text-decoration: none;
+	color: var(--text-color);
+	font-family: var(--primary-font);
+	font-weight: bold;
+	transition: .3s;
+}
+
+ul li a:hover{
+	color: var(--primaryF-color);
+	transition: .3s;
+}
+
+ul li button{
+	background-color: var(--primaryF-color);
+	border: 2px solid var(--primarF-color);
+	border-radius: 5px;
+	cursor: pointer;
+	transition: .3s;
+}
+
+ul li button:hover{
+	background-color: var(--secondaryF-color);
+	transition: .3s;
+}
+
+#footer{
+	background-color:var(--primaryF-color);
+	font-family: var(--tertiary-font);
+	font-size: 13px;
+	padding: 2px;
+	color: var(--primary-color);
+}
+
+#footer p{
+	text-align: center;
+}
+
+.flex{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}

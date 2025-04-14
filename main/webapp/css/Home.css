@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+body {
+	height: 100vh;
+}
+
+:root {
+	--primary-color: #000000;
+	--secondary-color: #1C1C1C;
+	--primaryF-color: #FF6F00;
+	--secondaryF-color: #FF4200;
+	--text-color: #FFFFFF;
+	--primary-font: "Julius Sans One", sans-serif;
+	--tertiary-font: "Noto Sans", sans-serif;
+	--secondary-font: "Maitree", serif;
+}
+
+header {
+	background-color: var(--primary-color);
+}
+
+
+
+.logo {
+	width: 185px;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.navigationBar, .authenticationBar {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 20px;
+	font-family: var(--tertiary-font);
+}
+
+.authenticationBar {
+	font-size: 16px;
+}
+
+.content {
+	height: 88.7vh;
+	background-image: url("../resources/images/bg1.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.content::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+* {
+	position: relative;
+	z-index: 2;
+}
+
+.homeText {
+	color: var(--text-color);
+	font-family: var(--secondary-font);
+	text-align: center;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.homeText a{
+	background: var(--primaryF-color);
+	padding: 2px;
+	border: 2px solid var(--primary-color);
+	border-radius: 6px;
+	color: var(--primary-color);
+	font-family: var(--tertiary-font);
+	font-size: 14px;
+	transition: .3s;
+	cursor: pointer;
+}
+
+.homeText a:hover{
+	background: var(--secondaryF-color);
+	border: 2px solid var(--primary-color);
+	transition: .3s;
+}
+
+.homeText h3 {
+	font-family: var(--primary-font);
+	font-size: 36px;
+}
+
+.homeText h6 {
+	font-family: var(--tertiary-font);
+	color: var(--primaryF-color);
+	font-size: 16px;
+}
+
+.homeText p{
+	font-size: 20px;
+}
+
+.branding {
+	width: 70%;
+}
+
+.homeText, .branding {
+	padding: 50px;
+}
+
+.branding img {
+	transition: transform 0.3s ease;
+}
+
+.branding img:hover {
+	transform: scale(1.1);
+	cursor: pointer;
+}
+
+
+.main-content {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+}
+
+@media ( max-width : 960px) {
+	.flex {
+		flex-direction: column-reverse;
+	}
+}
