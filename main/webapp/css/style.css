@@ -69,7 +69,7 @@ ul li{
 	text-decoration: none;
 }
 
-ul li a{
+.navigationBar li a{
 	text-decoration: none;
 	color: var(--text-color);
 	font-family: var(--primary-font);
@@ -77,12 +77,12 @@ ul li a{
 	transition: .3s;
 }
 
-ul li a:hover{
+.navigationBar li a:hover{
 	color: var(--primaryF-color);
 	transition: .3s;
 }
 
-ul li button{
+.authenticationBar li a{
 	background-color: var(--primaryF-color);
 	border: 2px solid var(--primarF-color);
 	border-radius: 5px;
@@ -90,7 +90,7 @@ ul li button{
 	transition: .3s;
 }
 
-ul li button:hover{
+.authenticationBar li a:hover{
 	background-color: var(--secondaryF-color);
 	transition: .3s;
 }

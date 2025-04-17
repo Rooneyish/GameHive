@@ -1,28 +1,17 @@
 @charset "UTF-8";
 
-body {
-	height: 100vh;
-}
-
-:root {
-	--primary-color: #000000;
-	--secondary-color: #1C1C1C;
-	--primaryF-color: #FF6F00;
-	--secondaryF-color: #FF4200;
-	--text-color: #FFFFFF;
-	--primary-font: "Julius Sans One", sans-serif;
-	--tertiary-font: "Noto Sans", sans-serif;
-	--secondary-font: "Maitree", serif;
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 header {
 	background-color: var(--primary-color);
 }
 
-
-
 .logo {
-	width: 185px;
+	width: 150px;
 }
 
 nav {
@@ -43,8 +32,55 @@ nav {
 	font-size: 16px;
 }
 
+.navigationBar li a{
+	text-decoration: none;
+	color: var(--text-color);
+	font-family: var(--primary-font);
+	font-weight: bold;
+	transition: .3s;
+}
+
+.navigationBar li a:hover{
+	color: var(--primaryF-color);
+	transition: .3s;
+}
+
+.authenticationBar li a{
+	background-color: var(--primaryF-color);
+	border: 2px solid var(--primary-color);
+	border-radius: 5px;
+	cursor: pointer;
+	transition: .3s;
+	text-decoration: none;
+	color: var(--primary-color);
+	padding: 2px 8px;
+	font-size:12px;
+}
+
+.authenticationBar li a:hover{
+	background-color: var(--secondaryF-color);
+	transition: .3s;
+}
+
+#footer{
+	background-color:var(--primaryF-color);
+	font-family: var(--tertiary-font);
+	font-size: 13px;
+	padding: 2px;
+	color: var(--primary-color);
+}
+
+#footer p{
+	text-align: center;
+}
+
 .content {
-	height: 88.7vh;
+	height: 90vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
 	background-image: url("../resources/images/bg1.jpg");
 	background-size: cover;
 	background-position: center;
@@ -79,7 +115,7 @@ nav {
 	gap: 10px;
 }
 
-.homeText a{
+.homeText a {
 	background: var(--primaryF-color);
 	padding: 2px;
 	border: 2px solid var(--primary-color);
@@ -91,7 +127,7 @@ nav {
 	cursor: pointer;
 }
 
-.homeText a:hover{
+.homeText a:hover {
 	background: var(--secondaryF-color);
 	border: 2px solid var(--primary-color);
 	transition: .3s;
@@ -108,7 +144,7 @@ nav {
 	font-size: 16px;
 }
 
-.homeText p{
+.homeText p {
 	font-size: 20px;
 }
 
@@ -117,10 +153,13 @@ nav {
 }
 
 .homeText, .branding {
-	padding: 50px;
+	padding: 20px;
 }
 
 .branding img {
+	max-width: 100%;
+	max-height: 300px;
+	height: auto;
 	transition: transform 0.3s ease;
 }
 
@@ -129,13 +168,19 @@ nav {
 	cursor: pointer;
 }
 
-
 .main-content {
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	position: relative;
+	top: unset;
+	left: unset;
+	transform: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	width: 100%;
+	max-width: 1200px;
+	margin: auto;
+	padding: 40px 20px;
+	gap: 30px;
 }
 
 @media ( max-width : 960px) {

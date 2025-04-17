@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+.login-background {
+	background-image: url("../resources/images/bg1.jpg");
+	background-size: cover;
+	background-position: center;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 30px;
+	overflow: hidden;
+}
+
+.login-background::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+* {
+	position: relative;
+	z-index: 2;
+}
+
+.login-logo {
+	width: 250px;
+}
+
+.login-container {
+	display: flex;
+	width: 700px;
+	background: var(--primary-color);
+	border: 2px solid var(--primaryF-color);
+	border-radius: 16px;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 0 20px rgba(255, 153, 0, 0.4);
+	overflow: hidden;
+}
+
+.left {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.left img {
+	width: 100%;
+	object-fit: contain;
+	border-right: 2px solid var(--primaryF-color);
+}
+
+.right {
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 40px;
+	background: rgba(255, 153, 0, 0.05);
+	gap: 20px;
+}
+
+.right form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 15px;
+}
+
+.right h3{
+	font-family: var(--primary-font);
+	color: var(--text-color);
+}
+
+.right h3 span{
+	color: var(--primaryF-color);
+	font-size: 28px;
+}
+
+.right form div{
+	display: flex;
+	flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+	padding: 8px 10px;
+	border: none;
+	border-bottom: 2px solid var(--primaryF-color);
+	background: transparent;
+	color: var(--text-color);
+	font-size: 14px;
+	transition: all 0.3s ease;
+	width: 100%;
+}
+
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+	outline: none;
+	border-bottom: 2px solid #ffaa33;
+	box-shadow: none;
+	background: transparent;
+}
+
+label {
+	font-size: 14px;
+	color: var(--secondaryF-color);
+	font-family: var(--tertiary-font)
+}
+
+.login-button{
+	width: fit-content;
+	align-self: center; 
+	border: none;
+	border-radius: 6px;
+	background: var(--primaryF-color);
+	color: black;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;	
+	padding: 2px 8px;
+	font-size:12px;
+	font-family: var(--tertiary-font);
+}
+
+.login-button:hover {
+	background: var(--secondaryF-color);
+	color: white;
+}
+
+.not-registered{
+	font-family: var(--tertiary-font);
+	color: white;
+	font-size: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.not-registered:hover{
+	text-decoration: underline;
+	color: var(--secondaryF-color);
+	
+}

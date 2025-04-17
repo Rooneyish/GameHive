@@ -1,18 +1,18 @@
 <header>
-	<nav class="container">
+	<nav class="container" role="navigation">
 		<h1 class="logo">
-			<a><img alt="logo"
+			<a href="home"><img alt="Gamespace logo"
 				src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
 		</h1>
 		<ul class="navigationBar">
-		<li><a href="home">Home</a></li>
-		<li><a href="#">Games</a></li>
-		<li><a href="#">About</a></li>
-		<li><a href="">Contact</a></li>
+			<li><a href="home">Home</a></li>
+			<li><a href="#">Games</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
 		</ul>
 		<ul class="authenticationBar">
-		<li><button>Log-In</button></li>
-		<li><button>Sign-Up</button></li>
+			<li><a href="log-in" class="header-button">Log-In</a></li>
+			<li><a href="sign-up" class="header-button">Sign-Up</a></li>
 		</ul>
 	</nav>
 </header>
