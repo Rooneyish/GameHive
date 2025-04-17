@@ -12,7 +12,7 @@
 		</ul>
 		<ul class="authenticationBar">
 			<li><a href="log-in" class="header-button">Log-In</a></li>
-			<li><a href="sign-up" class="header-button">Sign-Up</a></li>
+			<li><a href="register" class="header-button">Sign-Up</a></li>
 		</ul>
 	</nav>
 </header>

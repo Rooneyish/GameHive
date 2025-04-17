@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.login-background {
+.auth-background {
 	background-image: url("../resources/images/bg1.jpg");
 	background-size: cover;
 	background-position: center;
@@ -13,7 +13,7 @@
 	overflow: hidden;
 }
 
-.login-background::before {
+.auth-background::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -29,7 +29,7 @@
 	z-index: 2;
 }
 
-.login-logo {
+.auth-logo {
 	width: 250px;
 }
 
@@ -68,6 +68,11 @@
 	gap: 20px;
 }
 
+.right p {
+	color: var(--text-color);
+	font-family: var(--tertiary-font);
+}
+
 .right form {
 	display: flex;
 	flex-direction: column;
@@ -75,23 +80,22 @@
 	gap: 15px;
 }
 
-.right h3{
+.right h3 {
 	font-family: var(--primary-font);
 	color: var(--text-color);
 }
 
-.right h3 span{
+.right h3 span {
 	color: var(--primaryF-color);
 	font-size: 28px;
 }
 
-.right form div{
+.right form div {
 	display: flex;
 	flex-direction: column;
 }
 
-input[type="text"],
-input[type="password"] {
+input[type="text"], input[type="password"] {
 	padding: 8px 10px;
 	border: none;
 	border-bottom: 2px solid var(--primaryF-color);
@@ -100,11 +104,10 @@ input[type="password"] {
 	font-size: 14px;
 	transition: all 0.3s ease;
 	width: 100%;
+	font-family: var(--tertiary-font);
 }
 
-
-input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
 	outline: none;
 	border-bottom: 2px solid #ffaa33;
 	box-shadow: none;
@@ -114,21 +117,21 @@ input[type="password"]:focus {
 label {
 	font-size: 14px;
 	color: var(--secondaryF-color);
-	font-family: var(--tertiary-font)
+	font-family: var(--tertiary-font);
 }
 
-.login-button{
+.login-button {
 	width: fit-content;
-	align-self: center; 
+	align-self: center;
 	border: none;
 	border-radius: 6px;
 	background: var(--primaryF-color);
 	color: black;
 	font-weight: bold;
 	cursor: pointer;
-	transition: all 0.3s ease;	
+	transition: all 0.3s ease;
 	padding: 2px 8px;
-	font-size:12px;
+	font-size: 12px;
 	font-family: var(--tertiary-font);
 }
 
@@ -137,7 +140,7 @@ label {
 	color: white;
 }
 
-.not-registered{
+.not-registered {
 	font-family: var(--tertiary-font);
 	color: white;
 	font-size: 10px;
@@ -146,8 +149,7 @@ label {
 	cursor: pointer;
 }
 
-.not-registered:hover{
+.not-registered:hover {
 	text-decoration: underline;
 	color: var(--secondaryF-color);
-	
 }
