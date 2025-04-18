@@ -60,7 +60,7 @@ public class LoginService {
 	        if (result.next()) {
 	            String userDb = result.getString("username");
 
-	            String passwordDb = result.getString("username");
+	            String passwordDb = result.getString("user_password");
 	            
 	            if (userDb.equals(loginModel.getUsername()) 
 	            		&& passwordDb.equals(loginModel.getPassword())) {
