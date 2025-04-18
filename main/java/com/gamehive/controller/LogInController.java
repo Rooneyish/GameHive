@@ -2,23 +2,33 @@ package com.gamehive.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+
+import com.gamehive.model.LoginModel;
+import com.gamehive.model.UserModel;
+import com.gamehive.service.LoginService;
+import com.gamehive.util.StringUtil;
 
 /**
  * Servlet implementation class LogInController
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/log-in" })
+@WebServlet(asyncSupported = true, urlPatterns = { "/login" })
 public class LogInController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final LoginService loginService;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public LogInController() {
         super();
+        this.loginService = new LoginService();
         // TODO Auto-generated constructor stub
     }
 
@@ -35,7 +45,51 @@ public class LogInController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			LoginModel loginModel = new LoginModel(username, password);
+			
+			int loginResult = loginService.getUserLoginInfo(loginModel);
+			
+			if(loginResult==1) {
+	        	HttpSession userSession = request.getSession();
+				userSession.setAttribute(StringUtil.USERNAME, username);
+				userSession.setMaxInactiveInterval(30*60);
+				
+				Cookie userCookie= new Cookie(StringUtil.USER, username);
+				userCookie.setMaxAge(30*60);
+				response.addCookie(userCookie);
+				
+	            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
+				response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
+	        } else if (loginResult == 0) {
+	            // Username or password mismatch
+	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_LOGIN);
+				request.setAttribute(StringUtil.USERNAME, username);
+	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+	        } else if (loginResult == -1) {
+	            // Username not found
+	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_CREATE_ACCOUNT);
+				request.setAttribute(StringUtil.USERNAME, username);
+	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+	        } else {
+	            // Internal server error
+	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
+				request.setAttribute(StringUtil.USERNAME, username);
+	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+	        }
+		}catch(Exception e) {
+			handleError(request, response, "An unexpected error occured, please try again.");
+		}
 	}
+
+	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
+			throws ServletException, IOException {
+		req.setAttribute("error", message);
+		req.getRequestDispatcher("/WEB-INF/pages/Register.jsp").forward(req, resp);
+	}
+	
 
 }

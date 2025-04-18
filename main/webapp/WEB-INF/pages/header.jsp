@@ -11,7 +11,7 @@
 			<li><a href="#">Contact</a></li>
 		</ul>
 		<ul class="authenticationBar">
-			<li><a href="log-in" class="header-button">Log-In</a></li>
+			<li><a href="login" class="header-button">Log-In</a></li>
 			<li><a href="register" class="header-button">Sign-Up</a></li>
 		</ul>
 	</nav>

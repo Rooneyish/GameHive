@@ -77,7 +77,7 @@
 					</div>
 					<button type="submit" class="Register-button">Register</button>
 				</form>
-				<a href="log-in" class="not-registered">Registered Already? Log-In</a>
+				<a href="loin" class="not-registered">Registered Already? Log-In</a>
 			</div>
 			<div class="banner">
 				<img alt="" src="${pageContext.request.contextPath}/resources/images/registerimg1.png">
