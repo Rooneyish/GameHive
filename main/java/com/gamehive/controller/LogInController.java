@@ -53,17 +53,41 @@ public class LogInController extends HttpServlet {
 			
 			int loginResult = loginService.getUserLoginInfo(loginModel);
 			
+			int userRoleResult = loginService.getUserRoleInfo(loginModel);
+			
 			if(loginResult==1) {
-	        	HttpSession userSession = request.getSession();
-				userSession.setAttribute(StringUtil.USERNAME, username);
-				userSession.setMaxInactiveInterval(30*60);
-				
-				Cookie userCookie= new Cookie(StringUtil.USER, username);
-				userCookie.setMaxAge(30*60);
-				response.addCookie(userCookie);
-				
-	            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
-				response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
+				if(userRoleResult==1) {
+		        	HttpSession userSession = request.getSession();
+					userSession.setAttribute(StringUtil.USERNAME, username);
+					userSession.setMaxInactiveInterval(30*60);
+					
+					Cookie userCookie= new Cookie(StringUtil.USER, username);
+					userCookie.setMaxAge(30*60);
+					response.addCookie(userCookie);
+					
+		            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
+					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
+				}else if (userRoleResult==0) {
+					HttpSession userSession = request.getSession();
+					userSession.setAttribute(StringUtil.USERNAME, username);
+					userSession.setMaxInactiveInterval(30*60);
+					
+					Cookie userCookie= new Cookie(StringUtil.USER, username);
+					userCookie.setMaxAge(30*60);
+					response.addCookie(userCookie);
+					
+		            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
+					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_GAMER_PORTAL);
+				}else if(userRoleResult==-3) {
+		            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_USER_ROLE_NOT_FOUND);
+					request.setAttribute(StringUtil.USERNAME, username);
+		            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+				}else {
+		            // Internal server error
+		            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
+					request.setAttribute(StringUtil.USERNAME, username);
+		            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+				}
 	        } else if (loginResult == 0) {
 	            // Username or password mismatch
 	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_LOGIN);

@@ -16,13 +16,7 @@ public class StringUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	public static final String QUERY_REGISTER_STUDENT = "INSERT INTO student_info ("
-			+ "first_name, last_name, birthday, gender, email, number, subject, user_name, password) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	public static final String QUERY_LOGIN_USER_CHECK = "SELECT * FROM student_info WHERE user_name = ?";
-	// End: Queries
 
 	// Start: Parameter names
 	public static final String USERNAME = "username";
@@ -47,7 +41,8 @@ public class StringUtil {
 	public static final String MESSAGE_SUCCESS_LOGIN = "Successfully LoggedIn!";
 	public static final String MESSAGE_ERROR_LOGIN = "Either username or password is not correct!";
 	public static final String MESSAGE_ERROR_CREATE_ACCOUNT = "Account for this username is not registered! Please create a new account.";
-
+	public static final String MESSAGE_ERROR_USER_ROLE_NOT_FOUND = "User Role is undefine.";
+	
 	// Other Messages
 	public static final String MESSAGE_ERROR_SERVER = "An unexpected server error occurred.";
 	public static final String MESSAGE_SUCCESS_DELETE = "Successfully Deleted!";
@@ -64,6 +59,7 @@ public class StringUtil {
 	public static final String PAGE_URL_FOOTER = "/WEB-INF/pages/footer.jsp";
 	public static final String PAGE_URL_HEADER = "/WEB-INF/pages/header.jsp";
 	public static final String PAGE_URL_ADMIN = "/admin"; 
+	public static final String PAGE_URL_GAMER_PORTAL = "/gamerportal";
 	public static final String URL_LOGIN = "/login.jsp";
 	public static final String URL_INDEX = "/index.jsp";
 	// End: JSP Route

@@ -49,31 +49,55 @@ public class LoginService {
 		}
 		return false;
 	}
-	
+
 	public int getUserLoginInfo(LoginModel loginModel) {
-	    try {
-	        PreparedStatement st = dbConnect.prepareStatement("SELECT * FROM user_information WHERE username = ?");
-	        st.setString(1, loginModel.getUsername());
+		try {
+			PreparedStatement st = dbConnect.prepareStatement("SELECT * FROM user_information WHERE username = ?");
+			st.setString(1, loginModel.getUsername());
 
-	        ResultSet result = st.executeQuery();
+			ResultSet result = st.executeQuery();
 
-	        if (result.next()) {
-	            String userDb = result.getString("username");
+			if (result.next()) {
+				String userDb = result.getString("username");
 
-	            String passwordDb = result.getString("user_password");
-	            
-	            if (userDb.equals(loginModel.getUsername()) 
-	            		&& passwordDb.equals(loginModel.getPassword())) {
-	                return 1;
-	            } else {
-	                return 0;
-	            }
-	        } else {
-	            return -1;
-	        }
-	    } catch (SQLException ex) {
-	        ex.printStackTrace();
-	        return -2;
-	    }
+				String passwordDb = result.getString("user_password");
+
+				if (userDb.equals(loginModel.getUsername()) && passwordDb.equals(loginModel.getPassword())) {
+					return 1;
+				} else {
+					return 0;
+				}
+			} else {
+				return -1;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			return -2;
+		}
+	}
+
+	public int getUserRoleInfo(LoginModel loginModel) {
+		try {
+			PreparedStatement st = dbConnect.prepareStatement("Select * FROM user_information WHERE username =?");
+			st.setString(1, loginModel.getUsername());
+
+			ResultSet result = st.executeQuery();
+
+			if (result.next()) {
+				String userRoleDb = result.getString("user_role");
+				if (userRoleDb.equals("admin")) {
+					return 1;
+				} else if (userRoleDb.equals("gamer")) {
+					return 0;
+				}else {
+					return -3;
+				}
+			}else {
+				return -1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -2;
+		}
 	}
 }
