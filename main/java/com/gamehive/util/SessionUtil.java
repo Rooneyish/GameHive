@@ -16,7 +16,7 @@ public class SessionUtil {
 		return null;
 	}
 	
-	public static void removeAttribure(HttpServletRequest request, String key) {
+	public static void removeAttribute(HttpServletRequest request, String key) {
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			session.removeAttribute(key);
