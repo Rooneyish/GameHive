@@ -6,7 +6,7 @@
 
 .register-container {
 	display: flex;
-	width: 900px;
+	width: 800px;
 	background: var(--primary-color);
 	border: 2px solid var(--primaryF-color);
 	border-radius: 16px;

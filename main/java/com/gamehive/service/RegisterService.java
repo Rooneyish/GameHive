@@ -33,7 +33,7 @@ public class RegisterService {
 			insertStmt.setString(4, userModel.getUserEmail());
 			insertStmt.setString(5, userModel.getPassword());
 			insertStmt.setDate(6, userModel.getCreatedDate());
-			insertStmt.setString(7, userModel.getUserRole());
+			insertStmt.setString(7, "gamer");
 
 			return insertStmt.executeUpdate() >0;
 			

@@ -56,17 +56,6 @@
 					</div>
 					<div class="register-row">
 						<div>
-							<label for="role">Role</label>
-							<div class="radio-buttons">
-								<input type="radio" id="gamer" name="role" value="gamer">
-								<label for="gamer">Gamer</label> <input type="radio" id="admin"
-									name="role" value="admin"><label for="admin">Admin</label>
-							</div>
-						</div>
-						<div></div>
-					</div>
-					<div class="register-row">
-						<div>
 							<label for="password">Password</label> <input type="password"
 								id="password" name="password" required>
 						</div>

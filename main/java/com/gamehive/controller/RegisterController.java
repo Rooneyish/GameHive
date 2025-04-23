@@ -10,6 +10,7 @@ import java.sql.Date;
 
 import com.gamehive.model.UserModel;
 import com.gamehive.service.RegisterService;
+import com.gamehive.util.ValidationUtil;
 
 /**
  * Servlet implementation class RegisterController
@@ -47,6 +48,14 @@ public class RegisterController extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			UserModel userModel = extractUserModel(request); 
+			
+			String validationError = validateUserModel(userModel);
+			
+	        if (validationError != null) {
+	            handleError(request, response, validationError);
+	            return;
+	        }
+			
 			Boolean isAdded = registerService.registerUser(userModel);
 			
 			if(isAdded == null) {
@@ -74,8 +83,39 @@ public class RegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		req.setAttribute("error", message);
 		req.getRequestDispatcher("/WEB-INF/pages/Register.jsp").forward(req, resp);
+		System.out.print(message);
 	}
 	
+	private String validateUserModel(UserModel user) {
+	    if (user.getUsername() == null || !ValidationUtil.isAlphanumeric(user.getUsername())) {
+	        return "Username must contain only alpha-numeric values.";
+	    }
+
+	    if (user.getUserEmail() == null || !ValidationUtil.isEmail(user.getUserEmail())) {
+	        return "Please enter a valid email address.";
+	    }
+
+	    if (user.getPassword() == null || !ValidationUtil.isValidPassword(user.getPassword())) {
+	        return "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+	    }
+
+	    if (user.getGender() == null || !ValidationUtil.isGenderMatches(user.getGender())) {
+	        return "Gender must be either 'male' or 'female'.";
+	    }
+
+	    if (user.getDob() == null || !ValidationUtil.isValidAge(user.getDob())) {
+	        return "Gamer must be above 10 years";
+	    }
+
+	    return null; 
+	}
+
+	
+	/**
+	 * Extracts User credentials from the Registration form
+	 * 
+	 * @return UserModel 
+	 */
 	private UserModel extractUserModel(HttpServletRequest request) {
 	    UserModel user = new UserModel();
 	    user.setUsername(request.getParameter("username"));
@@ -84,7 +124,6 @@ public class RegisterController extends HttpServlet {
 	    user.setUserEmail(request.getParameter("user-email"));
 	    user.setPassword(request.getParameter("password"));
 	    user.setCreatedDate(new Date(System.currentTimeMillis()));
-	    user.setUserRole(request.getParameter("role")); 
 	    return user;
 	}
 
