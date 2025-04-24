@@ -20,12 +20,14 @@ import com.gamehive.util.StringUtil;
 /**
  * Servlet Filter implementation class AuthenticationFilter
  */
-@WebFilter("/AuthenticationFilter")
+@WebFilter(asyncSupported = true, urlPatterns = "/*")
 public class AuthenticationFilter extends HttpFilter implements Filter {
 
 	private static final String LOGIN = "/login";
 	private static final String REGISTER = "/register";
 	private static final String HOME = "/home";
+	private static final String ADMIN = "/admin";
+	private static final String GAMERPORTAL = "/gamerportal";
 	private static final String ROOT = "/";
 
 	/**
@@ -58,31 +60,54 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		// Get the requested URI
 		String uri = req.getRequestURI();
 
-		// Allow access to static resources (CSS) and the index page without checking
+		// Allow access to static resources (CSS, JS, images) and the index page without checking
 		// login
-		if (uri.endsWith(".css") || uri.endsWith(StringUtil.URL_LOGIN)) {
-			chain.doFilter(request, response);
-			return;
-		}
+	    if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg")
+	            || uri.endsWith(".jpeg") || uri.endsWith(".gif") || uri.endsWith(".svg")
+	            || uri.contains("/resources/")) {
+	        chain.doFilter(request, response);
+	        return;
+	    }
 
-		boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
+		
+		Object username = SessionUtil.getAttribute(req, StringUtil.USERNAME);
+		Object role = SessionUtil.getAttribute(req, "role");
 
-		if (!isLoggedIn) {
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
+		boolean isLoggedIn = username != null;
+		
+		if (!isLoggedIn) { // user is not logged in 
+			// if uri == login || register || root 
+			// then can go anywhere
+			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/") || uri.equals("/")) {
 				chain.doFilter(request, response);
-			} else {
-				res.sendRedirect(req.getContextPath() + LOGIN);
+			} else { // else send him to root
+				res.sendRedirect(req.getContextPath() + ROOT);
 
 			}
 		} else {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
-				res.sendRedirect(req.getContextPath() + HOME);
-			} else {
-				chain.doFilter(request, response);
-
+				if(uri.endsWith(ADMIN) && "admin".equals(role)) {
+					res.sendRedirect(req.getContextPath() + ADMIN);
+				}else if(uri.endsWith(GAMERPORTAL) && "gamer".equals(role)) {
+					res.sendRedirect(req.getContextPath() + ADMIN);
+				}
+				return;
 			}
+			
+	        if (!uri.contains("/admin") && "admin".equals(role)) {
+	            res.sendRedirect(req.getContextPath() + ADMIN);
+	            return;
+	        }
+
+	        if (!uri.contains("/gamerportal") && "gamer".equals(role)) {
+	            res.sendRedirect(req.getContextPath() + GAMERPORTAL);
+	            return;
+	        }
+			
+			chain.doFilter(request, response);
 
 		}
+
 		// pass the request along the filter chain
 	}
 

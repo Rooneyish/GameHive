@@ -61,7 +61,7 @@ public class StringUtil {
 	public static final String PAGE_URL_ADMIN = "/admin"; 
 	public static final String PAGE_URL_GAMER_PORTAL = "/gamerportal";
 	public static final String URL_LOGIN = "/login.jsp";
-	public static final String URL_INDEX = "/index.jsp";
+	public static final String URL_INDEX = "/home.jsp";
 	// End: JSP Route
 
 	// Start: Servlet Route

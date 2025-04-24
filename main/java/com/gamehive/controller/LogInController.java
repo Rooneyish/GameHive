@@ -13,6 +13,8 @@ import java.io.IOException;
 import com.gamehive.model.LoginModel;
 import com.gamehive.model.UserModel;
 import com.gamehive.service.LoginService;
+import com.gamehive.util.CookieUtil;
+import com.gamehive.util.SessionUtil;
 import com.gamehive.util.StringUtil;
 
 /**
@@ -22,89 +24,78 @@ import com.gamehive.util.StringUtil;
 public class LogInController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final LoginService loginService;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogInController() {
-        super();
-        this.loginService = new LoginService();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LogInController() {
+		super();
+		this.loginService = new LoginService();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			
+
 			LoginModel loginModel = new LoginModel(username, password);
-			
 			int loginResult = loginService.getUserLoginInfo(loginModel);
-			
 			int userRoleResult = loginService.getUserRoleInfo(loginModel);
-			
-			if(loginResult==1) {
-				if(userRoleResult==1) {
-		        	HttpSession userSession = request.getSession();
-					userSession.setAttribute(StringUtil.USERNAME, username);
-					userSession.setMaxInactiveInterval(30*60);
-					
-					Cookie userCookie= new Cookie(StringUtil.USER, username);
-					userCookie.setMaxAge(30*60);
-					response.addCookie(userCookie);
-					
-		            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
+
+			if (loginResult == 1) {
+				SessionUtil.setAttribute(request, StringUtil.USERNAME, username);
+				CookieUtil.addCookie(response, StringUtil.USER, username, 30 * 60);
+
+				if (userRoleResult == 1) {
+					SessionUtil.setAttribute(request, "role", "admin");
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
-				}else if (userRoleResult==0) {
-					HttpSession userSession = request.getSession();
-					userSession.setAttribute(StringUtil.USERNAME, username);
-					userSession.setMaxInactiveInterval(30*60);
-					
-					Cookie userCookie= new Cookie(StringUtil.USER, username);
-					userCookie.setMaxAge(30*60);
-					response.addCookie(userCookie);
-					
-		            request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
+					System.out.println(SessionUtil.getAttribute(request, "username"));
+				} else if (userRoleResult == 0) {
+					SessionUtil.setAttribute(request, "role", "gamer");
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_GAMER_PORTAL);
-				}else if(userRoleResult==-3) {
-		            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_USER_ROLE_NOT_FOUND);
+				} else if (userRoleResult == -3) {
+					request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_USER_ROLE_NOT_FOUND);
 					request.setAttribute(StringUtil.USERNAME, username);
-		            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-				}else {
-		            // Internal server error
-		            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
+					request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+				} else {
+					request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
 					request.setAttribute(StringUtil.USERNAME, username);
-		            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+					request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
 				}
-	        } else if (loginResult == 0) {
-	            // Username or password mismatch
-	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_LOGIN);
+			} else if (loginResult == 0) {
+				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_LOGIN);
 				request.setAttribute(StringUtil.USERNAME, username);
-	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-	        } else if (loginResult == -1) {
-	            // Username not found
-	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_CREATE_ACCOUNT);
+				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+
+			} else if (loginResult == -1) {
+				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_CREATE_ACCOUNT);
 				request.setAttribute(StringUtil.USERNAME, username);
-	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-	        } else {
-	            // Internal server error
-	            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
+				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+
+			} else {
+				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
 				request.setAttribute(StringUtil.USERNAME, username);
-	            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-	        }
-		}catch(Exception e) {
+				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+			}
+
+		} catch (Exception e) {
 			handleError(request, response, "An unexpected error occured, please try again.");
 		}
 	}
@@ -114,6 +105,5 @@ public class LogInController extends HttpServlet {
 		req.setAttribute("error", message);
 		req.getRequestDispatcher("/WEB-INF/pages/Register.jsp").forward(req, resp);
 	}
-	
 
 }
