@@ -75,12 +75,10 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 
 		boolean isLoggedIn = username != null;
 		
-		if (!isLoggedIn) { // user is not logged in 
-			// if uri == login || register || root 
-			// then can go anywhere
+		if (!isLoggedIn) { 
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/") || uri.equals("/")) {
 				chain.doFilter(request, response);
-			} else { // else send him to root
+			} else {
 				res.sendRedirect(req.getContextPath() + ROOT);
 
 			}
