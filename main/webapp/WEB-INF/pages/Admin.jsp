@@ -44,7 +44,7 @@
 					<li><a href="#">Settings</a></li>
 				</ul>
 				<div class="logout-button">
-					<a href="#">Logout</a>
+					<a href="logout">Logout</a>
 				</div>
 			</div>
 

@@ -60,54 +60,56 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		// Get the requested URI
 		String uri = req.getRequestURI();
 
-		// Allow access to static resources (CSS, JS, images) and the index page without checking
+		// Allow access to static resources (CSS, JS, images) and the index page without
+		// checking
 		// login
-	    if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg")
-	            || uri.endsWith(".jpeg") || uri.endsWith(".gif") || uri.endsWith(".svg")
-	            || uri.contains("/resources/")) {
-	        chain.doFilter(request, response);
-	        return;
-	    }
+		if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg")
+				|| uri.endsWith(".jpeg") || uri.endsWith(".gif") || uri.endsWith(".svg")
+				|| uri.contains("/resources/")) {
+			chain.doFilter(request, response);
+			return;
+		}
 
-		
 		Object username = SessionUtil.getAttribute(req, StringUtil.USERNAME);
 		Object role = SessionUtil.getAttribute(req, "role");
 
 		boolean isLoggedIn = username != null;
-		
-		if (!isLoggedIn) { 
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/") || uri.equals("/")) {
+
+		if (!isLoggedIn) {
+			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
+					|| uri.equals("/")) {
 				chain.doFilter(request, response);
+				return;
 			} else {
 				res.sendRedirect(req.getContextPath() + ROOT);
-
-			}
-		} else {
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
-				if(uri.endsWith(ADMIN) && "admin".equals(role)) {
-					res.sendRedirect(req.getContextPath() + ADMIN);
-				}else if(uri.endsWith(GAMERPORTAL) && "gamer".equals(role)) {
-					res.sendRedirect(req.getContextPath() + ADMIN);
-				}
 				return;
 			}
-			
-	        if (!uri.contains("/admin") && "admin".equals(role)) {
-	            res.sendRedirect(req.getContextPath() + ADMIN);
-	            return;
-	        }
-
-	        if (!uri.contains("/gamerportal") && "gamer".equals(role)) {
-	            res.sendRedirect(req.getContextPath() + GAMERPORTAL);
-	            return;
-	        }
-			
-			chain.doFilter(request, response);
-
 		}
 
-		// pass the request along the filter chain
+		if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
+			if ("admin".equals(role)) {
+				res.sendRedirect(req.getContextPath() + ADMIN);
+				return;
+			} else if ("gamer".equals(role)) {
+				res.sendRedirect(req.getContextPath() + GAMERPORTAL);
+				return;
+			}
+		}
+
+		if (uri.endsWith(GAMERPORTAL) && "admin".equals(role)) {
+			res.sendRedirect(req.getContextPath() + ADMIN);
+			return;
+		}
+
+		if (uri.endsWith(ADMIN) && "gamer".equals(role)) {
+			res.sendRedirect(req.getContextPath() + GAMERPORTAL);
+			return;
+		}
+
+		chain.doFilter(request, response);
 	}
+
+	// pass the request along the filter chain
 
 	/**
 	 * @see Filter#init(FilterConfig)
