@@ -66,33 +66,17 @@ public class LogInController extends HttpServlet {
 				if (userRoleResult == 1) {
 					SessionUtil.setAttribute(request, "role", "admin");
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
-					System.out.println(SessionUtil.getAttribute(request, "username"));
 				} else if (userRoleResult == 0) {
 					SessionUtil.setAttribute(request, "role", "gamer");
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_GAMER_PORTAL);
-				} else if (userRoleResult == -3) {
-					request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_USER_ROLE_NOT_FOUND);
-					request.setAttribute(StringUtil.USERNAME, username);
-					request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
 				} else {
-					request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
-					request.setAttribute(StringUtil.USERNAME, username);
-					request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+					request.setAttribute("error", "User role not found.");
+				    request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
 				}
-			} else if (loginResult == 0) {
-				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_LOGIN);
-				request.setAttribute(StringUtil.USERNAME, username);
-				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-
-			} else if (loginResult == -1) {
-				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_CREATE_ACCOUNT);
-				request.setAttribute(StringUtil.USERNAME, username);
-				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
-
 			} else {
-				request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
-				request.setAttribute(StringUtil.USERNAME, username);
-				request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+				request.setAttribute("error", "Invalid username or password");
+				request.setAttribute("username", username);
+				request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
 			}
 
 		} catch (Exception e) {
