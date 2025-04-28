@@ -14,7 +14,7 @@
 	<header>
 		<div class="admin-header">
 			<div>
-				<a href="home"><img alt="admin-brand-logo"
+				<a href="admin"><img alt="admin-brand-logo"
 					src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
 				<div class="admin-search-wrapper">
 					<input type="text" id="admin-search" name="admin-search"

@@ -1,1 +1,207 @@
 @charset "UTF-8";
+
+html, body {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+body {
+	background: var(--primary-color);
+	color: var(--text-color);
+	font-family: var(--tertiary-font);
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	width: 100%;
+	background-color: var(--primary-color);
+	padding: 5px;
+}
+
+.gamer-brand-logo {
+	width: 150px;
+}
+
+.gamer-header {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.gamer-header>div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+}
+
+.gamer-header img {
+	width: 150px;
+}
+
+.gamer-header input[type="text"] {
+	padding: 0.5rem;
+	font-size: 12px;
+	border: 2px solid var(--primaryF-color);
+	outline: none;
+	width: 300px;
+	height: 30px;
+}
+
+.gamer-search-wrapper {
+	flex: 1;
+	display: flex;
+}
+
+.gamer-header input[type="text"] {
+	flex: 1;
+	width: auto;
+	min-width: 200px;
+}
+
+.gamer-search-button {
+	padding: 0px 5px;
+	margin-left: 0.5rem;
+	border: none;
+	background-color: var(--primaryF-color);
+	color: var(--primary-color);
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.gamer-profile {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.gamer-profile img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #ccc;
+	margin-bottom: 0.5rem;
+}
+
+.gamer-profile a {
+	font-size: 14px;
+	text-decoration: none;
+	color: var(--primaryF-color);
+}
+
+.admin-profile p {
+	font-size: 12px;
+}
+
+section {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	width: 100%;
+	background-image: url("../resources/images/bg1.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+section::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+* {
+	position: relative;
+	z-index: 2;
+}
+
+.section-container {
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+}
+
+.filters {
+	width: 20%;
+	border: 1px solid var(--primaryF-color);
+	min-height: 88.7vh;
+	padding: 2rem 1rem;
+	box-sizing: border-box;
+	font-family: var(--primary-font);
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+}
+
+.filters h4 {
+	font-family: var(--tertiary-font);
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.filter-section>div {
+	display: flex;
+	flex-direction: column;
+	padding-left: 10px;
+}
+
+.filter-section label {
+	font-family: var(--tertiary-font);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.recommend-games {
+	width: 80%;
+	padding: 2rem;
+	border: 1px solid var(--primaryF-color);
+	border-left: none;
+}
+
+
+.game-card img {
+	width: 100%;
+	height: 200px;
+	border-radius: 8px;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: flex-start;
+}
+
+.game-card {
+	width: calc(33.333% - 6.66px); 
+	box-sizing: border-box;
+	border: 2px solid var(--primaryF-color);
+	border-radius: 8px;
+	overflow: hidden;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+}
+
+.game-details {
+	background: var(--primaryF-color);
+}
+
+.game-details .game-description {
+	font-size: 12px;
+}
+
+.more-btn {
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	background: var(--primary-color);
+	color: var(--text-color);
+}
