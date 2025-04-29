@@ -26,7 +26,7 @@
 						src="${pageContext.request.contextPath}/resources/images/admin.png">
 					<div>
 						<p>Gamer,</p>
-						<a href="#">Gamer Name</a>
+						<a href="profile">Gamer Name</a>
 					</div>
 				</div>
 			</div>
