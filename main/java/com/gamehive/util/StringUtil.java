@@ -25,6 +25,8 @@ public class StringUtil {
 	public static final String GENDER = "gender";
 	public static final String USER_ROLE = "role";
 	public static final String PASSWORD = "password";
+    public static final String ROLE_ADMIN = "admin";
+    public static final String ROLE_GAMER = "gamer";
 	// End: Parameter names
 
 	// Start: Validation Messages
@@ -42,6 +44,9 @@ public class StringUtil {
 	public static final String MESSAGE_ERROR_LOGIN = "Either username or password is not correct!";
 	public static final String MESSAGE_ERROR_CREATE_ACCOUNT = "Account for this username is not registered! Please create a new account.";
 	public static final String MESSAGE_ERROR_USER_ROLE_NOT_FOUND = "User Role is undefine.";
+    public static final String MESSAGE_ERROR_GENERIC = "An unexpected error occurred. Please try again later.";
+    public static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
+    public static final String USER_COOKIE_NAME = "gamehiveUser";
 	
 	// Other Messages
 	public static final String MESSAGE_ERROR_SERVER = "An unexpected server error occurred.";

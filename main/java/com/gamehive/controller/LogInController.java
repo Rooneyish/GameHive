@@ -51,43 +51,63 @@ public class LogInController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String username = request.getParameter(StringUtil.USERNAME); 
+		String password = request.getParameter(StringUtil.PASSWORD); 
+
 		try {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
+			if (username == null || username.trim().isEmpty() || password == null || password.isEmpty()) {
+				handleLoginError(request, response, "Username and password cannot be empty.", username);
+				return;
+			}
 
 			LoginModel loginModel = new LoginModel(username, password);
-			int loginResult = loginService.getUserLoginInfo(loginModel);
-			int userRoleResult = loginService.getUserRoleInfo(loginModel);
 
-			if (loginResult == 1) {
-				SessionUtil.setAttribute(request, StringUtil.USERNAME, username);
-				CookieUtil.addCookie(response, StringUtil.USER, username, 30 * 60);
+			UserModel loggedInUser = loginService.loginUser(loginModel);
 
-				if (userRoleResult == 1) {
-					SessionUtil.setAttribute(request, "role", "admin");
+
+			if (loggedInUser != null) {
+				String actualUsername = loggedInUser.getUsername(); 
+				String userRole = loggedInUser.getUserRole(); 
+
+				System.out.println("Controller: Login successful for " + actualUsername + ", Role: " + userRole);
+
+				SessionUtil.setAttribute(request, StringUtil.USERNAME, actualUsername);
+				SessionUtil.setAttribute(request, StringUtil.USER_ROLE, userRole); 
+
+				CookieUtil.addCookie(response, StringUtil.USER_COOKIE_NAME, actualUsername, 30 * 60);
+
+				if (StringUtil.ROLE_ADMIN.equalsIgnoreCase(userRole)) { 
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_ADMIN);
-				} else if (userRoleResult == 0) {
-					SessionUtil.setAttribute(request, "role", "gamer");
+				} else if (StringUtil.ROLE_GAMER.equalsIgnoreCase(userRole)) { 
 					response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_GAMER_PORTAL);
 				} else {
-					request.setAttribute("error", "User role not found.");
-				    request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+					System.err.println("Unknown role encountered: " + userRole + " for user: " + actualUsername);
+					SessionUtil.invalidateSession(request);
+					CookieUtil.deleteCookie(response, StringUtil.USER_COOKIE_NAME);
+					handleLoginError(request, response,
+							"Login successful, but your user role is undefined. Please contact support.", username);
 				}
+
 			} else {
-				request.setAttribute("error", "Invalid username or password");
-				request.setAttribute("username", username);
-				request.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(request, response);
+				System.out.println("Controller: Login failed for username attempt: " + username);
+				handleLoginError(request, response, StringUtil.MESSAGE_ERROR_LOGIN, username);
 			}
 
 		} catch (Exception e) {
-			handleError(request, response, "An unexpected error occured, please try again.");
+			System.err.println("Unexpected error during login POST request processing: " + e.getMessage());
+			e.printStackTrace();
+			handleLoginError(request, response, StringUtil.MESSAGE_ERROR_GENERIC, username); 
 		}
 	}
 
-	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
-			throws ServletException, IOException {
-		req.setAttribute("error", message);
-		req.getRequestDispatcher("/WEB-INF/pages/Register.jsp").forward(req, resp);
+	private void handleLoginError(HttpServletRequest request, HttpServletResponse response, String message,
+			String username) throws ServletException, IOException {
+		request.setAttribute(StringUtil.ERROR_MESSAGE_ATTRIBUTE, message); 
+		if (username != null) {
+			request.setAttribute(StringUtil.USERNAME, username);
+		}
+
+		request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
 	}
 
 }

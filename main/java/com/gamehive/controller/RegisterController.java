@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 
+import com.gamehive.util.PasswordUtil;
 import com.gamehive.model.UserModel;
 import com.gamehive.service.RegisterService;
 import com.gamehive.util.ValidationUtil;
@@ -55,6 +56,13 @@ public class RegisterController extends HttpServlet {
 	            handleError(request, response, validationError);
 	            return;
 	        }
+	        
+	        String plainPassword = userModel.getPassword();
+            String username = userModel.getUsername();
+            
+            String encryptedPassword = PasswordUtil.encrypt(username, plainPassword);
+            
+            userModel.setPassword(encryptedPassword);
 			
 			Boolean isAdded = registerService.registerUser(userModel);
 			
@@ -122,7 +130,7 @@ public class RegisterController extends HttpServlet {
 	    user.setDob(Date.valueOf(request.getParameter("dob")));
 	    user.setGender(request.getParameter("gender"));
 	    user.setUserEmail(request.getParameter("user-email"));
-	    user.setPassword(request.getParameter("password"));
+	    user.setPassword( request.getParameter("password"));
 	    user.setCreatedDate(new Date(System.currentTimeMillis()));
 	    return user;
 	}
