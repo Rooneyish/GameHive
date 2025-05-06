@@ -6,6 +6,10 @@ import java.sql.SQLException;
 
 import com.gamehive.config.DBconfig;
 import com.gamehive.model.UserModel;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class RegisterService {
 	private Connection dbConnect;

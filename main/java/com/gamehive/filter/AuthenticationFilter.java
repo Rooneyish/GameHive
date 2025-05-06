@@ -16,6 +16,10 @@ import java.io.IOException;
 
 import com.gamehive.util.SessionUtil;
 import com.gamehive.util.StringUtil;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 /**
  * Servlet Filter implementation class AuthenticationFilter
@@ -74,7 +78,8 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		Object role = SessionUtil.getAttribute(req, "role");
 
 		boolean isLoggedIn = username != null;
-
+		
+		
 		if (!isLoggedIn) {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
 					|| uri.equals("/")) {

@@ -2,11 +2,9 @@ package com.gamehive.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -16,6 +14,10 @@ import com.gamehive.service.LoginService;
 import com.gamehive.util.CookieUtil;
 import com.gamehive.util.SessionUtil;
 import com.gamehive.util.StringUtil;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 /**
  * Servlet implementation class LogInController

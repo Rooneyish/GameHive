@@ -5,6 +5,10 @@ import java.util.Arrays;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class CookieUtil {
 	public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {

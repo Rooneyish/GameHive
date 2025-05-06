@@ -1,4 +1,8 @@
 package com.gamehive.model;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class LoginModel {
 	private String username;

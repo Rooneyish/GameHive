@@ -1,6 +1,10 @@
 package com.gamehive.model;
 
 import java.sql.Date;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class UserModel {
 	private String username;

@@ -9,6 +9,10 @@ import com.gamehive.config.DBconfig;
 import com.gamehive.model.LoginModel;
 import com.gamehive.model.UserModel;
 import com.gamehive.util.PasswordUtil;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class LoginService {
 	private Connection dbConnect;

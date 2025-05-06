@@ -14,6 +14,11 @@ import com.gamehive.service.RegisterService;
 import com.gamehive.util.ValidationUtil;
 
 /**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
+
+/**
  * Servlet implementation class RegisterController
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/register" })

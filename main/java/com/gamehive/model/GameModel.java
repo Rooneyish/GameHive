@@ -1,6 +1,10 @@
 package com.gamehive.model;
 
 import java.time.LocalDate;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class GameModel {
 	private String gameTitle;

@@ -3,6 +3,10 @@ package com.gamehive.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 /**
 *DBconfig is a configuration class for managing database connections. It

@@ -8,6 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.gamehive.util.SessionUtil;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 /**
  * Servlet implementation class LogoutController

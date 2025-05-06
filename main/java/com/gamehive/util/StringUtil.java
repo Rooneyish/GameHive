@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.gamehive.config.DBconfig;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 public class StringUtil {
 	private Connection dbConnect;
