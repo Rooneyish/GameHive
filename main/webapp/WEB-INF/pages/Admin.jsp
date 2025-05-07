@@ -26,7 +26,10 @@
 						src="${pageContext.request.contextPath}/resources/images/admin.png">
 					<div>
 						<p>Admin,</p>
-						<a href="#">Admin Name</a>
+						<%
+						String username = (String) session.getAttribute("username");
+						%>
+						<a href="profile"><%=username%></a>
 					</div>
 				</div>
 			</div>

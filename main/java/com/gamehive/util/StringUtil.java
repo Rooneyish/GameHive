@@ -2,6 +2,7 @@ package com.gamehive.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.gamehive.config.DBconfig;
 /**
@@ -25,6 +26,7 @@ public class StringUtil {
 	// Start: Parameter names
 	public static final String USERNAME = "username";
 	public static final String USER_EMAIL = "user_email";
+	public static final String CREATED_DATE = "created_date";
 	public static final String BIRTHDAY = "dob";
 	public static final String GENDER = "gender";
 	public static final String USER_ROLE = "role";

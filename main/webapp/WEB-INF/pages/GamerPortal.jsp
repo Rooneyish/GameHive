@@ -11,6 +11,7 @@
 	href="${pageContext.request.contextPath}/css/GamePortal.css" />
 </head>
 <body>
+
 	<header>
 		<div class="gamer-header">
 			<div>
@@ -26,7 +27,10 @@
 						src="${pageContext.request.contextPath}/resources/images/admin.png">
 					<div>
 						<p>Gamer,</p>
-						<a href="profile">Gamer Name</a>
+						<%
+						String username = (String) session.getAttribute("username");
+						%>
+						<a href="profile"><%=username%></a>
 					</div>
 				</div>
 			</div>
@@ -36,9 +40,8 @@
 	<section>
 		<div class="section-container">
 			<div class="filters">
-				<h3>Filters</h3>
-
 				<div class="filter-section">
+					<h3>Filters</h3>
 					<h4>Genres</h4>
 					<div>
 						<label><input type="checkbox" /> FPS</label> <label><input
@@ -46,22 +49,21 @@
 							type="checkbox" /> Strategy</label> <label><input
 							type="checkbox" /> <em>Role-Playing</em></label>
 					</div>
-				</div>
 
-				<div class="filter-section">
 					<h4>Platforms</h4>
 					<div>
 						<label><input type="checkbox" /> Play Station</label> <label><input
 							type="checkbox" /> Xbox</label> <label><input type="checkbox" />
 							PC</label> <label><input type="checkbox" /> Mobile</label>
-
 					</div>
-				</div>
 
-				<div class="filter-section">
 					<h4>Price</h4>
 					<input type="range" min="0" max="100" />
 				</div>
+				<div class="logout-button">
+					<a href="logout">Logout</a>
+				</div>
+
 			</div>
 
 			<div class="recommend-games">

@@ -137,12 +137,13 @@ section::before {
 	font-size: 20px;
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
+	justify-content: space-between;
 }
+
 
 .filters h4 {
 	font-family: var(--tertiary-font);
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 400;
 }
 
@@ -205,3 +206,20 @@ section::before {
 	background: var(--primary-color);
 	color: var(--text-color);
 }
+
+.logout-button a {
+	text-align: center;
+	background-color: #ff4d4d;
+	color: white;
+	padding: 10px;
+	text-decoration: none;
+	border-radius: 4px;
+	margin-top: 1rem;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.logout-button a:hover {
+	background-color: #cc0000;
+}
+

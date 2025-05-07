@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="java.io.*, java.util.Date, java.util.Enumeration" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +75,10 @@
 .overlay button:focus {
 	outline: none;
 }
+
+.profile img{
+	object-fit: cover;
+}
 </style>
 </head>
 <body>
@@ -111,10 +116,6 @@
 				<form action="profile" method="post">
 					<h3>Edit Profile</h3>
 					<div>
-						<label for="edit-username">Username</label> <input type="text"
-							id="edit-username" name="edit-username" required>
-					</div>
-					<div>
 						<label for="edit-email">Email</label> <input type="text"
 							id="edit-email" name="edit-email" required>
 					</div>
@@ -133,8 +134,14 @@
 								name="edit-gender" value="other"> <label for="e-other">Other</label>
 						</div>
 					</div>
+					<br>
+					<p>Enter Username and Password to Update above details.</p>
 					<div>
-						<label for="edit-password">Enter Password to Update</label> <input
+						<label for="edit-username">Username</label> <input type="text"
+							id="edit-username" name="edit-username" required>
+					</div>
+					<div>
+						<label for="edit-password">Password</label> <input
 							type="password" id="edit-password" name="edit-password" required>
 					</div>
 					<button type="submit" class="edit-profile-button">Save
@@ -142,11 +149,16 @@
 				</form>
 			</div>
 			<div class="profile">
-				<img alt="user-profile" src="">
+				<img alt="user-profile" src="${pageContext.request.contextPath}/resources/images/registerimg1.png">
+				<%
+				String username = (String) session.getAttribute("username");
+				String email = (String) session.getAttribute("user_email");
+				Date createdDate= (Date) session.getAttribute("created_date");			
+				%>
 				<div>
-					<p class="profile-username">Username</p>
-					<p class="profile-email">User-email</p>
-					<p class="profile-created-date">created-date</p>
+					<p class="profile-username">Username: <span style="color:var(--primaryF-color)"><%=username %></span> </p>
+					<p class="profile-email">Email: <span style="color:var(--primaryF-color)"><%=email %></span> </p>
+					<p class="profile-created-date">Created-date: <span style="color:var(--primaryF-color)"><%=createdDate %></span> </p>
 				</div>
 			</div>
 		</div>

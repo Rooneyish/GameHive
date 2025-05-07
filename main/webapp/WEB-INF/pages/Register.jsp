@@ -146,7 +146,7 @@
 					</div>
 					<button type="submit" class="Register-button">Register</button>
 				</form>
-				<a href="loin" class="not-registered">Registered Already? Log-In</a>
+				<a href="login" class="not-registered">Registered Already? Log-In</a>
 			</div>
 			<div class="banner">
 				<img alt=""

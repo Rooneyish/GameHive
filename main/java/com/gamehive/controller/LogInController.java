@@ -75,6 +75,8 @@ public class LogInController extends HttpServlet {
 
 				SessionUtil.setAttribute(request, StringUtil.USERNAME, actualUsername);
 				SessionUtil.setAttribute(request, StringUtil.USER_ROLE, userRole); 
+				SessionUtil.setAttribute(request, StringUtil.USER_EMAIL, loggedInUser.getUserEmail());
+				SessionUtil.setAttribute(request, StringUtil.CREATED_DATE, (Object)loggedInUser.getCreatedDate());
 
 				CookieUtil.addCookie(response, StringUtil.USER_COOKIE_NAME, actualUsername, 30 * 60);
 
