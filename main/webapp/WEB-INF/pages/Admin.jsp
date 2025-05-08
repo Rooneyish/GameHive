@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.gamehive.model.GameModel"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,16 +86,34 @@
 							<th>Released Date</th>
 							<th>Rating</th>
 							<th>Price</th>
+							<th>Edit</th>
 						</tr>
+						<%
+						GameModel gameInfo = (GameModel) request.getAttribute("gameInfo");
+						if (gameInfo != null) {
+						%>
 						<tr>
-							<td>001</td>
-							<td>Galaxy Quest</td>
-							<td>AstroSoft</td>
-							<td>Nova Studios</td>
-							<td>2023-06-15</td>
-							<td>4.5</td>
-							<td>$19.99</td>
+							<td><%=gameInfo.getGameId()%></td>
+							<td><%=gameInfo.getGameTitle()%></td>
+							<td><%=gameInfo.getGamePublisher()%></td>
+							<td><%=gameInfo.getGameDevelopers()%></td>
+							<td><%=gameInfo.getGameReleasedDate()%></td>
+							<td><%=gameInfo.getGameRating()%></td>
+							<td>$<%=gameInfo.getGamePrice()%></td>
+							<td>
+								<button class="edit-btn">✏️</button>
+								<button class="delete-btn">🗑️</button>
+							</td>
 						</tr>
+						<%
+						} else {
+						%>
+						<tr>
+							<td colspan="8">No game data available</td>
+						</tr>
+						<%
+						}
+						%>
 					</table>
 				</div>
 			</div>
