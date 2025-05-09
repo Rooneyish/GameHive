@@ -16,18 +16,21 @@ public class GameModel {
 	private float gameRating;
 	private String gameDevelopers;
 	private String gameGenres;
-	private String gamePublishers; 
+	private String gamePlatforms;
 	
-	public GameModel(int gameId, String gameTitle, String gameDescription, String gamePublisher, String gameDevelopers, String gameGenres, String gamePlatforms, Date gameReleasedDate,
-			float gamePrice, float gameRating) {
+	public GameModel(int gameId, String gameTitle, String gameDescription, String gamePublisher, Date gameReleasedDate,
+			float gamePrice, float gameRating, String gameDevelopers, String gameGenres, String gamePlatforms) {
 		super();
-		this.gameId= gameId;
+		this.gameId = gameId;
 		this.gameTitle = gameTitle;
 		this.gameDescription = gameDescription;
 		this.gamePublisher = gamePublisher;
 		this.gameReleasedDate = gameReleasedDate;
 		this.gamePrice = gamePrice;
 		this.gameRating = gameRating;
+		this.gameDevelopers = gameDevelopers;
+		this.gameGenres = gameGenres;
+		this.gamePlatforms = gamePlatforms;
 	}
 
 	public int getGameId() {
@@ -102,11 +105,12 @@ public class GameModel {
 		this.gameGenres = gameGenres;
 	}
 
-	public String getGamePublishers() {
-		return gamePublishers;
+	public String getGamePlatforms() {
+		return gamePlatforms;
 	}
 
-	public void setGamePublishers(String gamePublishers) {
-		this.gamePublishers = gamePublishers;
-	}
+	public void setGamePlatforms(String gamePlatforms) {
+		this.gamePlatforms = gamePlatforms;
+	} 
+	
 }

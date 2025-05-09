@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import com.gamehive.model.GameModel;
 import com.gamehive.service.GameService;
@@ -38,9 +39,9 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		GameService gameService = new GameService();
-		GameModel gameInfo = gameService.getGameInformation();
+		List<GameModel> games = gameService.getAllGameInfo();
 		
-		request.setAttribute("gameInfo", gameInfo);
+		request.setAttribute("games", games);
 		request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);
 	}
 

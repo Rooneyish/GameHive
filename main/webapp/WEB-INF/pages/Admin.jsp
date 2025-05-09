@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.gamehive.model.GameModel"%>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,23 +90,25 @@
 							<th>Edit</th>
 						</tr>
 						<%
-						GameModel gameInfo = (GameModel) request.getAttribute("gameInfo");
-						if (gameInfo != null) {
+						List<GameModel> games = (List<GameModel>) request.getAttribute("games");
+						if (games != null) {
+							for (GameModel game : games) {
 						%>
 						<tr>
-							<td><%=gameInfo.getGameId()%></td>
-							<td><%=gameInfo.getGameTitle()%></td>
-							<td><%=gameInfo.getGamePublisher()%></td>
-							<td><%=gameInfo.getGameDevelopers()%></td>
-							<td><%=gameInfo.getGameReleasedDate()%></td>
-							<td><%=gameInfo.getGameRating()%></td>
-							<td>$<%=gameInfo.getGamePrice()%></td>
+							<td><%=game.getGameId()%></td>
+							<td><%=game.getGameTitle()%></td>
+							<td><%=game.getGamePublisher()%></td>
+							<td><%=game.getGameDevelopers()%></td>
+							<td><%=game.getGameReleasedDate()%></td>
+							<td><%=game.getGameRating()%></td>
+							<td>$<%=game.getGamePrice()%></td>
 							<td>
 								<button class="edit-btn">✏️</button>
 								<button class="delete-btn">🗑️</button>
 							</td>
 						</tr>
 						<%
+						}
 						} else {
 						%>
 						<tr>
