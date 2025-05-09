@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.gamehive.model.GameModel"%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +11,8 @@
 	href="${pageContext.request.contextPath}/css/style.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/Admin.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/AddNewGame.css" />
 </head>
 <body>
 	<header>
@@ -77,7 +79,10 @@
 				</div>
 
 				<div class="admin-table">
-					<h3>Games</h3>
+					<div class="admin-games">
+						<h3>Games</h3>
+						<a href="#" id="openAddGameModal">Add Games</a>
+					</div>
 					<table>
 						<tr>
 							<th>Game ID</th>
@@ -122,6 +127,41 @@
 			</div>
 		</div>
 	</section>
+	<jsp:include page='AddNewGame.jsp' />
 	<jsp:include page="footer.jsp" />
+	<script>
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							const modal = document
+									.getElementById("addGameModal");
+							const openBtn = document
+									.getElementById("openAddGameModal");
+							const closeBtn = document
+									.getElementById("closeModal");
+
+							if (openBtn && modal && closeBtn) {
+								openBtn.onclick = function(event) {
+									event.preventDefault(); // prevent "#" from jumping
+									modal.style.display = "block";
+								};
+
+								closeBtn.onclick = function() {
+									modal.style.display = "none";
+								};
+
+								window.onclick = function(event) {
+									if (event.target === modal) {
+										modal.style.display = "none";
+									}
+								};
+							} else {
+								console
+										.warn("Modal elements not found. Check if AddNewGame.jsp contains correct modal IDs.");
+							}
+						});
+	</script>
+
 </body>
 </html>

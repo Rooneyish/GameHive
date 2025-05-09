@@ -217,6 +217,26 @@ section::before {
 .admin-table h3 {
 	font-family: var(--primary-font);
 }
+.admin-games{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.admin-games a{
+	text-decoration: none;
+	color: var(--text-color);
+	background: var(--primaryF-color);
+	padding: 0px 6px;
+	border-radius: 8px;
+	border: 3px solid var(--primaryF-color);
+	font: 12px;
+}
+
+.admin-games a:hover{
+	color: var(--primaryF-color);
+	background: var(--primary-color);
+}
+
 
 table {
 	width: 100%;
