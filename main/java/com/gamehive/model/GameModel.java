@@ -1,6 +1,6 @@
 package com.gamehive.model;
 
-import java.util.Date;
+import java.sql.Date;
 /**
  * @author Ronish Prajapati
  * LUM-ID 23048584

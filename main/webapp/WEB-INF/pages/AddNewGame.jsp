@@ -2,14 +2,14 @@
 	<div class="modal-content">
 		<h3>Add New Game</h3>
 		<span class="close-btn" id="closeModal">&times;</span>
-		<form action="addGameServlet" method="post">
+		<form action="admin" method="post">
 			<div class="field">
 				<label>Game Title</label> <input type="text" name="gameTitle"
 					required />
 			</div>
 
 			<div class="field">
-				<label>Game Description</label>
+				<label>Game Description (In 16-20 words)</label>
 				<textarea name="gameDescription" rows="3" required></textarea>
 			</div>
 
@@ -30,13 +30,13 @@
 						name="genre[]" value="Action" />Action</label> <label><input
 						type="checkbox" name="genre[]" value="Adventure" />Adventure</label>
 					<label><input type="checkbox"
-						name="genre[]" value="RPG" />Role-Playing</label> <label><input
+						name="genre[]" value="Role-Playing" />Role-Playing</label> <label><input
 						type="checkbox" name="genre[]" value="Simulation" />Simulation</label>
 					<label><input type="checkbox"
 						name="genre[]" value="Strategy" />Strategy</label> <label><input
 						type="checkbox" name="genre[]" value="Sports" />Sports</label>
 					<label><input type="checkbox"
-						name="genre[]" value="Racing" />Racing/Driving</label> <label><input
+						name="genre[]" value="Racing/Driving" />Racing/Driving</label> <label><input
 						type="checkbox" name="genre[]" value="Puzzle" />Puzzle</label>
 				</div>
 			</div>

@@ -51,11 +51,11 @@
 .field input[type="number"],
 .field input[type="date"],
 .field textarea {
-  background-color: #0e0800;
+  background-color: var(--primary-color);
   border: none;
-  border-bottom: 2px solid orange;
+  border-bottom: 2px solid var(--primaryF-color);
   padding: 4px;
-  color: orange;
+  color: var(--primaryF-color);
   outline: none;
   width: 100%;
   font-size: 14px;
@@ -76,7 +76,7 @@
 }
 
 form .add-game-button {
-  background-color: orange;
+  background-color: var(--primaryF-color);
   color: black;
   border: none;
   padding: 5px 10px;
@@ -87,6 +87,6 @@ form .add-game-button {
 }
 
 form .add-game-button:hover {
-  background-color: #ff9900;
+  background-color: var(--primaryF-color);
 }
 
