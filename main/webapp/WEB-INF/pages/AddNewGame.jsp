@@ -2,7 +2,7 @@
 	<div class="modal-content">
 		<h3>Add New Game</h3>
 		<span class="close-btn" id="closeModal">&times;</span>
-		<form action="admin" method="post">
+		<form action="addGame" method="post">
 			<div class="field">
 				<label>Game Title</label> <input type="text" name="gameTitle"
 					required />

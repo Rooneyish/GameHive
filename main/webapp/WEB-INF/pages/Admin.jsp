@@ -108,7 +108,16 @@
 							<td><%=game.getGameRating()%></td>
 							<td>$<%=game.getGamePrice()%></td>
 							<td>
-								<button class="edit-btn">✏️</button>
+								<button class="edit-btn" data-id="<%=game.getGameId()%>"
+									data-title="<%=game.getGameTitle()%>"
+									data-description="<%=game.getGameDescription()%>"
+									data-publisher="<%=game.getGamePublisher()%>"
+									data-developers="<%=game.getGameDevelopers()%>"
+									data-genres="<%=String.join(",", game.getGameGenres())%>"
+									data-platforms="<%=String.join(",", game.getGamePlatforms())%>"
+									data-date="<%=game.getGameReleasedDate()%>"
+									data-rating="<%=game.getGameRating()%>"
+									data-price="<%=game.getGamePrice()%>">✏️</button>
 								<form method="post" action="deleteGame" style="display: inline;">
 									<input type="hidden" name="gameId"
 										value="<%=game.getGameId()%>">
@@ -132,6 +141,7 @@
 			</div>
 		</div>
 	</section>
+	<jsp:include page='UpdateGame.jsp' />
 	<jsp:include page='AddNewGame.jsp' />
 	<jsp:include page="footer.jsp" />
 	<script>
@@ -148,7 +158,7 @@
 
 							if (openBtn && modal && closeBtn) {
 								openBtn.onclick = function(event) {
-									event.preventDefault(); // prevent "#" from jumping
+									event.preventDefault(); 
 									modal.style.display = "block";
 								};
 
@@ -166,6 +176,51 @@
 										.warn("Modal elements not found. Check if AddNewGame.jsp contains correct modal IDs.");
 							}
 						});
+		
+		document.addEventListener("DOMContentLoaded", function() {
+		    const updateModal = document.getElementById("updateGameModal");
+		    const editButtons = document.querySelectorAll(".edit-btn");
+		    const closeUpdateBtn = document.querySelector("#updateGameModal #closeModal");
+
+		    editButtons.forEach(button => {
+		        button.addEventListener("click", function() {
+		            updateModal.style.display = "block";
+
+		            document.querySelector("#gameId").value = this.dataset.id;
+		            document.querySelector("#gameTitle").value = this.dataset.title;
+		            document.querySelector("#gameDescription").value = this.dataset.description;
+		            document.querySelector("#publisher").value = this.dataset.publisher;
+		            document.querySelector("#developers").value = this.dataset.developers;
+		            document.querySelector("#releasedDate").value = this.dataset.date;
+		            document.querySelector("#rating").value = this.dataset.rating;
+		            document.querySelector("#price").value = this.dataset.price;
+
+		            const genres = this.dataset.genres.split(',').map(g => g.trim().toLowerCase());
+		            document.querySelectorAll("#updateGameModal input[name='genre[]']").forEach(checkbox => {
+		                const checkboxValue = checkbox.value.trim().toLowerCase();
+		                checkbox.checked = genres.includes(checkboxValue);
+		            });
+
+		            const platforms = this.dataset.platforms.split(',').map(p => p.trim().toLowerCase());
+		            document.querySelectorAll("#updateGameModal input[name='platform[]']").forEach(checkbox => {
+		                const checkboxValue = checkbox.value.trim().toLowerCase();
+		                checkbox.checked = platforms.includes(checkboxValue);
+		            });
+		        });
+		    });
+
+		    if (closeUpdateBtn) {
+		        closeUpdateBtn.onclick = function() {
+		            updateModal.style.display = "none";
+		        };
+		    }
+
+		    window.onclick = function(event) {
+		        if (event.target === updateModal) {
+		            updateModal.style.display = "none";
+		        }
+		    };
+		});
 	</script>
 
 </body>

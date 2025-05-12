@@ -18,6 +18,10 @@ public class GameModel {
 	private String gameGenres;
 	private String gamePlatforms;
 	
+	public GameModel() {
+		
+	}
+	
 	public GameModel(int gameId, String gameTitle, String gameDescription, String gamePublisher, Date gameReleasedDate,
 			float gamePrice, float gameRating, String gameDevelopers, String gameGenres, String gamePlatforms) {
 		super();
