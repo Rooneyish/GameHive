@@ -94,4 +94,21 @@ public class GameService {
 		}
 		return games;
 	}
+	
+	public boolean deleteGameById(int gameId) {
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return false;
+		}
+		
+		String deleteQuery = "DELETE FROM game_information WHERE game_id = ?";
+		
+		try (PreparedStatement stmt = dbConnect.prepareStatement(deleteQuery)) {
+            stmt.setInt(1, gameId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+	}
 }

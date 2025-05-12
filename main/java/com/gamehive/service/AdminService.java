@@ -39,7 +39,6 @@ public class AdminService {
 	    String insertGameDeveloper = "INSERT INTO game_developers (game_id, developer_id) VALUES (?, ?)";
 
 	    try {
-	        // 1. Insert game basic info
 	        try (PreparedStatement insertStmt = dbConnect.prepareStatement(insertGameInfo)) {
 	            insertStmt.setString(1, game.getGameTitle());
 	            insertStmt.setString(2, game.getGameDescription());
@@ -51,7 +50,6 @@ public class AdminService {
 	            System.out.println("Game inserted into game_information table.");
 	        }
 
-	        // 2. Get game_id
 	        int gameId = -1;
 	        try (PreparedStatement selectStmt = dbConnect.prepareStatement(getGameIdSQL)) {
 	            selectStmt.setString(1, game.getGameTitle());
@@ -65,7 +63,6 @@ public class AdminService {
 	            }
 	        }
 
-	        // 3. Insert genres
 	        for (String genreName : game.getGameGenres().split(",")) {
 	            int genreId = getGenreIdByName(genreName.trim());
 	            if (genreId != -1) {
@@ -80,7 +77,6 @@ public class AdminService {
 	            }
 	        }
 
-	        // 4. Insert platforms
 	        for (String platformName : game.getGamePlatforms().split(",")) {
 	            int platformId = getPlatformIdByName(platformName.trim());
 	            if (platformId != -1) {
@@ -95,7 +91,6 @@ public class AdminService {
 	            }
 	        }
 
-	        // 5. Insert developers
 	        for (String devName : game.getGameDevelopers().split(",")) {
 	            int devId = getOrCreateDeveloperId(devName.trim());
 	            if (devId != -1) {

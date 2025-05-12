@@ -109,7 +109,12 @@
 							<td>$<%=game.getGamePrice()%></td>
 							<td>
 								<button class="edit-btn">✏️</button>
-								<button class="delete-btn">🗑️</button>
+								<form method="post" action="deleteGame" style="display: inline;">
+									<input type="hidden" name="gameId"
+										value="<%=game.getGameId()%>">
+									<button type="submit" class="delete-btn"
+										onclick="return confirm('Are you sure you want to delete this game?')">🗑️</button>
+								</form>
 							</td>
 						</tr>
 						<%
