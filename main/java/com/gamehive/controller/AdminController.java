@@ -13,6 +13,7 @@ import java.util.List;
 import com.gamehive.model.GameModel;
 import com.gamehive.service.AdminService;
 import com.gamehive.service.GameService;
+import com.gamehive.service.SortService;
 
 /**
  * @author Ronish Prajapati
@@ -43,18 +44,54 @@ public class AdminController extends HttpServlet {
 		// TODO Auto-generated method stub
 		GameService gameService = new GameService();
 		AdminService adminService = new AdminService();
-		List<GameModel> games = gameService.getAllGameInfo();
-		
+		SortService sortService = new SortService();
+
+
+		String sortBy = request.getParameter("sortOptions");
+		String orderByClause ="ORDER BY game_id ASC";
+
+	    if (sortBy != null) {
+	        switch (sortBy) {
+	            case "id_asc":
+	                orderByClause = "ORDER BY game_id";
+	                break;
+	            case "id_desc":
+	                orderByClause = "ORDER BY game_id DESC";
+	                break;
+	            case "price_asc":
+	                orderByClause = "ORDER BY game_price";
+	                break;
+	            case "price_desc":
+	                orderByClause = "ORDER BY game_price DESC";
+	                break;
+	            case "rating_asc":
+	                orderByClause = "ORDER BY game_rating";
+	                break;
+	            case "rating_desc":
+	                orderByClause = "ORDER BY game_rating DESC";
+	                break;
+	            case "date_asc":
+	                orderByClause = "ORDER BY game_released_date";
+	                break;
+	            case "date_desc":
+	                orderByClause = "ORDER BY game_released_date DESC";
+	                break;
+	            default:
+	                break;
+	        }
+	    }
+
+	    List<GameModel> sortGames = sortService.getSortedGames(orderByClause);
 		int totalGames = gameService.getNumberOfGames();
 		int totalDevelopers = gameService.getNumberOfDevelopers();
 		int totalFreeGames = gameService.getNumberOfFreeGames();
 		int totalUsers = adminService.getNumberOfUsers();
-		
+
 		request.setAttribute("totalUsers", totalUsers);
-        request.setAttribute("totalGames", totalGames);
-        request.setAttribute("totalDevelopers", totalDevelopers);
-        request.setAttribute("totalFreeGames", totalFreeGames);
-		request.setAttribute("games", games);
+		request.setAttribute("totalGames", totalGames);
+		request.setAttribute("totalDevelopers", totalDevelopers);
+		request.setAttribute("totalFreeGames", totalFreeGames);
+		request.setAttribute("games", sortGames);
 		request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);
 	}
 

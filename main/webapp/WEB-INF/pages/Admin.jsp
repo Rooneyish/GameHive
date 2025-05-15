@@ -81,20 +81,24 @@
 				<div class="admin-table">
 					<div class="admin-games">
 						<h3>Games</h3>
-						<div style="display: flex; justify-content: space-between; gap 20px; ">
-							<div class="sort-container">
-								<label for="sortOptions">Sort by:</label> <select
-									id="sortOptions" onchange="sortTable()">
-									<option value="id_asc">ID ↑</option>
-									<option value="id_desc">ID ↓</option>
-									<option value="price_asc">Price ↑</option>
-									<option value="price_desc">Price ↓</option>
-									<option value="rating_asc">Rating ↑</option>
-									<option value="rating_desc">Rating ↓</option>
-									<option value="date_asc">Release Date ↑</option>
-									<option value="date_desc">Release Date ↓</option>
-								</select>
-							</div>
+						<div style="display: flex; justify-content: space-between;">
+							<form method="get" action="admin">
+								<div class="sort-container">
+									<label for="sortOptions">Sort by:</label> <select
+										id="sortOptions" name="sortOptions"
+										onchange="this.form.submit()">
+										<option value="id_asc">ID ↑</option>
+										<option value="id_desc">ID ↓</option>
+										<option value="price_asc">Price ↑</option>
+										<option value="price_desc">Price ↓</option>
+										<option value="rating_asc">Rating ↑</option>
+										<option value="rating_desc">Rating ↓</option>
+										<option value="date_asc">Release Date ↑</option>
+										<option value="date_desc">Release Date ↓</option>
+									</select>
+								</div>
+							</form>
+
 							<a href="#" id="openAddGameModal">Add Games</a>
 						</div>
 					</div>
