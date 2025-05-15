@@ -25,4 +25,24 @@ public class AdminService {
 			e.printStackTrace();
 		}
 	}
+	
+	public int getNumberOfUsers() {
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return 0;
+		}
+
+		String selectQuery = "SELECT COUNT(user_id) number_of_users FROM user_information;";
+
+		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return result.getInt("number_of_users");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

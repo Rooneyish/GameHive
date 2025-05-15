@@ -42,8 +42,18 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		GameService gameService = new GameService();
+		AdminService adminService = new AdminService();
 		List<GameModel> games = gameService.getAllGameInfo();
-
+		
+		int totalGames = gameService.getNumberOfGames();
+		int totalDevelopers = gameService.getNumberOfDevelopers();
+		int totalFreeGames = gameService.getNumberOfFreeGames();
+		int totalUsers = adminService.getNumberOfUsers();
+		
+		request.setAttribute("totalUsers", totalUsers);
+        request.setAttribute("totalGames", totalGames);
+        request.setAttribute("totalDevelopers", totalDevelopers);
+        request.setAttribute("totalFreeGames", totalFreeGames);
 		request.setAttribute("games", games);
 		request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);
 	}

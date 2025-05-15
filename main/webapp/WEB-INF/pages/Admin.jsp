@@ -61,19 +61,19 @@
 					<div class="overview-cards">
 						<div class="o-card">
 							<h4>Total Games</h4>
-							<p id="t-games-no">1234</p>
+							<p id="t-games-no"><%=request.getAttribute("totalGames")%></p>
 						</div>
 						<div class="o-card">
 							<h4>Total Users</h4>
-							<p id="t-users-no">1234</p>
+							<p id="t-users-no"><%=request.getAttribute("totalUsers")%></p>
 						</div>
 						<div class="o-card">
 							<h4>Total Developers</h4>
-							<p id="t-developers-no">1234</p>
+							<p id="t-developers-no"><%=request.getAttribute("totalDevelopers")%></p>
 						</div>
 						<div class="o-card">
 							<h4>Total Free Games</h4>
-							<p id="t-free-games-no">1234</p>
+							<p id="t-free-games-no"><%=request.getAttribute("totalFreeGames")%></p>
 						</div>
 					</div>
 				</div>
@@ -81,7 +81,22 @@
 				<div class="admin-table">
 					<div class="admin-games">
 						<h3>Games</h3>
-						<a href="#" id="openAddGameModal">Add Games</a>
+						<div style="display: flex; justify-content: space-between; gap 20px; ">
+							<div class="sort-container">
+								<label for="sortOptions">Sort by:</label> <select
+									id="sortOptions" onchange="sortTable()">
+									<option value="id_asc">ID ↑</option>
+									<option value="id_desc">ID ↓</option>
+									<option value="price_asc">Price ↑</option>
+									<option value="price_desc">Price ↓</option>
+									<option value="rating_asc">Rating ↑</option>
+									<option value="rating_desc">Rating ↓</option>
+									<option value="date_asc">Release Date ↑</option>
+									<option value="date_desc">Release Date ↓</option>
+								</select>
+							</div>
+							<a href="#" id="openAddGameModal">Add Games</a>
+						</div>
 					</div>
 					<table>
 						<tr>

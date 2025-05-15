@@ -28,38 +28,98 @@ public class GameService {
 		}
 	}
 
-	public GameModel getGameInformationById(int gameId) {
+	public int getNumberOfGames() {
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return 0;
+		}
+
+		String selectQuery = "SELECT COUNT(game_id) number_of_games FROM game_information;";
+
+		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return result.getInt("number_of_games");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int getNumberOfDevelopers() {
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return 0;
+		}
+		
+		String selectQuery = "SELECT COUNT(developer_id) number_of_developers FROM developers;";
+
+		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return result.getInt("number_of_developers");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int getNumberOfFreeGames() {
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return 0;
+		}
+		
+		String selectQuery = "SELECT COUNT(game_id) number_of_free_games FROM game_information WHERE game_price = 0;";
+
+		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return result.getInt("number_of_free_games");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+
+	public GameModel getGameInformation() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
 			return null;
 		}
 
-		GameModel game = null;
-		String selectQuery = "SELECT gi.game_id, gi.game_title, gi.game_description, gi.game_publisher, GROUP_CONCAT(DISTINCT d.developer SEPARATOR ', ') AS developers, GROUP_CONCAT(DISTINCT g.genre SEPARATOR ', ') AS genres, GROUP_CONCAT(DISTINCT p.platform SEPARATOR ', ') AS platforms, gi.game_released_date, gi.game_rating, gi.game_price FROM game_information gi LEFT JOIN game_developers gd ON gi.game_id = gd.game_id LEFT JOIN developers d ON gd.developer_id = d.developer_id LEFT JOIN game_genres gg ON gi.game_id = gg.game_id LEFT JOIN genres g ON gg.genre_id = g.genre_id LEFT JOIN game_platforms gp ON gi.game_id = gp.game_id LEFT JOIN platforms p ON gp.platform_id = p.platform_id WHERE gi.game_id = ?;";
+		String selectQuery = "SELECT gi.game_id, gi.game_title, gi.game_description, gi.game_publisher, d.developer, g.genre, p.platform, gi.game_released_date, gi.game_rating, gi.game_price FROM game_information as gi LEFT JOIN game_developers as gd ON gi.game_id = gd.game_id LEFT JOIN developers as d ON gd.developer_id = d.developer_id LEFT JOIN game_genres as gg ON gi.game_id = gg.game_id LEFT JOIN genres as g ON gg.genre_id = g.genre_id LEFT JOIN game_platforms as gp ON gi.game_id = gp.game_id LEFT JOIN platforms as p ON gp.platform_id = p.platform_id;";
 
-		try (PreparedStatement ps = dbConnect.prepareStatement(selectQuery)) {
-			ps.setInt(1, gameId);
-			ResultSet rs = ps.executeQuery();
+		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+			ResultSet result = stmt.executeQuery();
 
-			if (rs.next()) {
-				game = new GameModel();
-				game.setGameId(rs.getInt("game_id"));
-				game.setGameTitle(rs.getString("game_title"));
-				game.setGameDescription(rs.getString("game_description"));
-				game.setGamePublisher(rs.getString("game_publisher"));
+			if (result.next()) {
+				int gId = result.getInt("game_id");
+				String gTitle = result.getString("game_title");
+				String gDescription = result.getString("game_description");
+				String gPublisher = result.getString("game_publisher");
+				String gDeveloper = result.getString("developer");
+				String gGenre = result.getString("genre");
+				String gPlatform = result.getString("platform");
+				Date gReleasedDate = result.getDate("game_released_date");
+				float gRating = result.getFloat("game_rating");
+				float gPrice = result.getFloat("game_price");
 
-				game.setGameDevelopers(rs.getString("developers"));
-				game.setGameGenres(rs.getString("genres"));
-				game.setGamePlatforms(rs.getString("platforms"));
-
-				game.setGameReleasedDate(rs.getDate("game_released_date"));
-				game.setGameRating(rs.getFloat("game_rating"));
-				game.setGamePrice(rs.getFloat("game_price"));
+				return new GameModel(gId, gTitle, gDescription, gPublisher, gReleasedDate, gPrice, gRating, gDeveloper,
+						gGenre, gPlatform);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return game;
+		return null;
 	}
 
 	public List<GameModel> getAllGameInfo() {
@@ -216,7 +276,7 @@ public class GameService {
 				System.out.println("Found Platform ID for '" + platformName + "': " + id);
 				return id;
 			} else {
-				System.out.println("⚠ Platform not found in DB: " + platformName);
+				System.out.println("Platform not found in DB: " + platformName);
 				return -1;
 			}
 		} catch (SQLException e) {
@@ -300,7 +360,7 @@ public class GameService {
 		String insertGameGenre = "INSERT INTO game_genres (game_id, genre_id) VALUES (?, ?)";
 		String insertGamePlatform = "INSERT INTO game_platforms (game_id, platform_id) VALUES (?, ?)";
 		String insertGameDeveloper = "INSERT INTO game_developers (game_id, developer_id) VALUES (?, ?)";
-		
+
 		try {
 			// Update game information
 			try (PreparedStatement updateStmt = dbConnect.prepareStatement(updateGameInfo)) {
@@ -318,7 +378,6 @@ public class GameService {
 				}
 				System.out.println("Game information updated.");
 			}
-
 
 			try (PreparedStatement deleteGenresStmt = dbConnect.prepareStatement(deleteGameGenres);
 					PreparedStatement deletePlatformsStmt = dbConnect.prepareStatement(deleteGamePlatforms);
