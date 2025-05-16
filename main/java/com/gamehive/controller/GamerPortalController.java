@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.gamehive.model.GameModel;
+import com.gamehive.service.GameFilterService;
 import com.gamehive.service.GameService;
 
 /**
@@ -36,17 +37,28 @@ public class GamerPortalController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String searchValue = request.getParameter("searchValue");
-		GameService gameService = new GameService();
-		List<GameModel> gameList;
+		String filterOption = request.getParameter("option");
 		
-		if(searchValue != null &&  !searchValue.trim().isEmpty()) {
+		GameService gameService = new GameService();
+		GameFilterService filterService = new GameFilterService();
+		
+		List<GameModel> gameList = null;
+		
+		if (searchValue != null && !searchValue.trim().isEmpty()) {
 			gameList = gameService.searchGames(searchValue.trim());
-		}else {
+		} else if (filterOption != null && !filterOption.trim().isEmpty()) {
+			gameList = filterService.getGamesByGenre(filterOption.trim());
+			if (gameList.isEmpty()) {
+				gameList = filterService.getGamesByPlatform(filterOption.trim());
+			}
+		} else {
 			gameList = gameService.getAllGameInfo();
 		}
 		
 		request.setAttribute("gameList", gameList);
 		request.setAttribute("searchValue", searchValue);
+		request.setAttribute("filterOption", filterOption);
+		
 		request.getRequestDispatcher("/WEB-INF/pages/GamerPortal.jsp").forward(request, response);
 	}
 
