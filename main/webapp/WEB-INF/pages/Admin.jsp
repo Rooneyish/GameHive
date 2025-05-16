@@ -20,11 +20,7 @@
 			<div>
 				<a href="admin"><img alt="admin-brand-logo"
 					src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
-				<div class="admin-search-wrapper">
-					<input type="text" id="admin-search" name="admin-search"
-						placeholder="Search...">
-					<button type="submit" class="admin-search-button">Search</button>
-				</div>
+				
 				<div class="admin-profile">
 					<img alt="Admin Profile"
 						src="${pageContext.request.contextPath}/resources/images/admin.png">
@@ -46,8 +42,6 @@
 			<div class="admin-sidebar">
 				<ul>
 					<li><a href="#">Dashboard</a></li>
-					<li><a href="#">Games</a></li>
-					<li><a href="#">Gamers</a></li>
 					<li><a href="#">Settings</a></li>
 				</ul>
 				<div class="logout-button">

@@ -10,6 +10,10 @@ import java.io.IOException;
  * @author Ronish Prajapati
  * LUM-ID 23048584
  * */
+import java.util.List;
+
+import com.gamehive.model.GameModel;
+import com.gamehive.service.GameService;
 
 /**
  * Servlet implementation class GamerPortalController
@@ -17,7 +21,7 @@ import java.io.IOException;
 @WebServlet(asyncSupported = true, urlPatterns = { "/gamerportal" })
 public class GamerPortalController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,6 +35,10 @@ public class GamerPortalController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		GameService gameService = new GameService();
+		List<GameModel> gameList = gameService.getAllGameInfo();
+		
+		request.setAttribute("gameList", gameList);
 		request.getRequestDispatcher("/WEB-INF/pages/GamerPortal.jsp").forward(request, response);
 	}
 
