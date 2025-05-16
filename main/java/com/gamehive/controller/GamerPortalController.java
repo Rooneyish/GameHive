@@ -35,10 +35,18 @@ public class GamerPortalController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String searchValue = request.getParameter("searchValue");
 		GameService gameService = new GameService();
-		List<GameModel> gameList = gameService.getAllGameInfo();
+		List<GameModel> gameList;
+		
+		if(searchValue != null &&  !searchValue.trim().isEmpty()) {
+			gameList = gameService.searchGames(searchValue.trim());
+		}else {
+			gameList = gameService.getAllGameInfo();
+		}
 		
 		request.setAttribute("gameList", gameList);
+		request.setAttribute("searchValue", searchValue);
 		request.getRequestDispatcher("/WEB-INF/pages/GamerPortal.jsp").forward(request, response);
 	}
 

@@ -217,7 +217,9 @@ section::before {
     overflow: hidden;
     flex-grow: 1; 
 }
-
+.game-developers{
+	overflow: hidden;
+}
 .review-btn {
     margin-top: 10px;
     outline: none;

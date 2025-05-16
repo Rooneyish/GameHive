@@ -19,9 +19,12 @@
 				<a href="gamerportal"><img alt="gamer-brand-logo"
 					src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
 				<div class="gamer-search-wrapper">
-					<input type="text" id="gamer-search" name="gamer-search"
-						placeholder="Search...">
-					<button type="submit" class="gamer-search-button">Search</button>
+					<form action="gamerportal" method="get"
+						class="gamer-search-wrapper">
+						<input type="text" id="gamer-search" name="searchValue"
+							placeholder="Search..." value="${param.searchQuery}">
+						<button type="submit" class="gamer-search-button">Search</button>
+					</form>
 				</div>
 				<div class="gamer-profile">
 					<img alt="Gamer Profile"
@@ -71,7 +74,15 @@
 			</div>
 
 			<div class="games-panel">
-				<h2>All Games</h2>
+				<c:choose>
+					<c:when test="${not empty searchValue}">
+						<h2>Your Searches</h2>
+					</c:when>
+					<c:otherwise>
+						<h2>All Games</h2>
+					</c:otherwise>
+				</c:choose>
+
 				<c:forEach var="game" items="${gameList}" varStatus="status">
 					<c:if test="${status.index % 3 ==0 }">
 						<div class="row">
@@ -80,6 +91,9 @@
 						<div class="game-details">
 							<h3>${game.gameTitle}</h3>
 							<p class="game-description">${game.gameDescription}</p>
+							<p class="game-developers">
+								<strong>Developers:</strong> ${game.gameDevelopers}
+							</p>
 							<p>
 								<strong>Platforms:</strong> ${game.gamePlatforms}
 							</p>

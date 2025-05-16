@@ -27,6 +27,38 @@ public class GameService {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<GameModel> searchGames(String searchValue){
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return null;
+		}
+		
+		List<GameModel> games = new ArrayList<>();
+	    String selectQuery= "SELECT gi.game_id, gi.game_title, gi.game_description, gi.game_publisher, GROUP_CONCAT(DISTINCT d.developer SEPARATOR ', ') AS developers, GROUP_CONCAT(DISTINCT g.genre SEPARATOR ', ') AS genres, GROUP_CONCAT(DISTINCT p.platform SEPARATOR ', ') AS platforms, gi.game_released_date, gi.game_rating, gi.game_price FROM game_information gi LEFT JOIN game_developers gd ON gi.game_id = gd.game_id LEFT JOIN developers d ON gd.developer_id = d.developer_id LEFT JOIN game_genres gg ON gi.game_id = gg.game_id LEFT JOIN genres g ON gg.genre_id = g.genre_id LEFT JOIN game_platforms gp ON gi.game_id = gp.game_id LEFT JOIN platforms p ON gp.platform_id = p.platform_id WHERE LOWER(game_title) LIKE LOWER(CONCAT('%', ?, '%')) GROUP BY gi.game_id;";
+
+	    try (
+	         PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
+
+	        stmt.setString(1, searchValue);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                GameModel game = new GameModel();
+	                game.setGameId(rs.getInt("game_id"));
+	                game.setGameTitle(rs.getString("game_title"));
+	                game.setGameDescription(rs.getString("game_description"));
+	                game.setGameDevelopers(rs.getString("developers"));
+	                game.setGamePlatforms(rs.getString("platforms"));
+	                game.setGameGenres(rs.getString("genres"));
+	                game.setGamePrice(rs.getFloat("game_price"));
+	                games.add(game);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return games;
+	}
 
 	public int getNumberOfGames() {
 		if (dbConnect == null) {
