@@ -83,7 +83,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		
 		
 		if (!isLoggedIn) {
-			if (uri.endsWith(ABOUT) ||uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
+			if (uri.endsWith(CONTACT)| uri.endsWith(ABOUT) ||uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
 					|| uri.equals("/")) {
 				chain.doFilter(request, response);
 				return;
