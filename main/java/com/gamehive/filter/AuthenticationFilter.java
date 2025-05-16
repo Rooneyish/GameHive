@@ -32,6 +32,8 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 	private static final String HOME = "/home";
 	private static final String ADMIN = "/admin";
 	private static final String GAMERPORTAL = "/gamerportal";
+	private static final String ABOUT = "/about";
+	private static final String CONTACT = "/contact";
 	private static final String ROOT = "/";
 
 	/**
@@ -81,7 +83,7 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		
 		
 		if (!isLoggedIn) {
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
+			if (uri.endsWith(ABOUT) ||uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
 					|| uri.equals("/")) {
 				chain.doFilter(request, response);
 				return;

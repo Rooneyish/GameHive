@@ -25,7 +25,7 @@
 					a casual player or a hardcore enthusiast, you'll find everything
 					from game reviews and ratings to trailers, system requirements, and
 					community feedback.</p>
-				<a>About Us</a>
+				<a href="about">About Us</a>
 			</div>
 			<div class="branding">
 				<img

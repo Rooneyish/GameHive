@@ -4,11 +4,12 @@ html, body {
   height: 100%;
   margin: 0;
   overflow: hidden;
+  background: var(--primary-color);
 }
 
 
 .content {
-	height: 88.5vh;
+	height: 90vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

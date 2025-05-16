@@ -6,8 +6,7 @@
 		</h1>
 		<ul class="navigationBar">
 			<li><a href="home">Home</a></li>
-			<li><a href="#">Games</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="about">About</a></li>
 			<li><a href="#">Contact</a></li>
 		</ul>
 		<ul class="authenticationBar">
