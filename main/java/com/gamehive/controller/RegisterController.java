@@ -53,39 +53,41 @@ public class RegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			UserModel userModel = extractUserModel(request); 
-			
-			String validationError = validateUserModel(userModel);
-			
-	        if (validationError != null) {
-	            handleError(request, response, validationError);
-	            return;
-	        }
-	        
-	        String plainPassword = userModel.getPassword();
-            String username = userModel.getUsername();
-            
-            String encryptedPassword = PasswordUtil.encrypt(username, plainPassword);
-            
-            userModel.setPassword(encryptedPassword);
-			
-			Boolean isAdded = registerService.registerUser(userModel);
-			
-			if(isAdded == null) {
-				handleError(request, response, "Our service is under maintenance. Please try again later.");
-			}
-			else if (isAdded) {
-				handleSuccess(request, response, "Account Register Successfully!", "/WEB-INF/pages/Login.jsp");
-			}
-			else {
-				handleError(request, response, "Couldn't Register your account.");
-			}
+		    UserModel userModel = extractUserModel(request);
+
+		    String validationError = validateUserModel(userModel);
+		    if (validationError != null) {
+		        handleError(request, response, validationError);
+		        return;
+		    }
+
+		    String plainPassword = userModel.getPassword();
+		    String username = userModel.getUsername();
+
+		    String encryptedPassword = PasswordUtil.encrypt(username, plainPassword);
+		    userModel.setPassword(encryptedPassword);
+
+		    Boolean isAdded = registerService.registerUser(userModel);
+
+		    if (isAdded == null) {
+		        handleError(request, response,
+		            "We're currently experiencing technical issues. Please try again later.");
+		    } else if (isAdded) {
+		        handleSuccess(request, response,
+		            "Your account has been created successfully! You can now log in.",
+		            "/WEB-INF/pages/Login.jsp");
+		    } else {
+		        handleError(request, response,
+		            "The username or email address is already registered. Please try a different one.");
+		    }
+
 		} catch (Exception e) {
-			handleError(request, response, "An unexpected error occured, please try again.");
+		    e.printStackTrace();
+		    handleError(request, response,
+		        "An unexpected error occurred during registration. Please try again.");
 		}
 	}
 
-	
 	private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
 			throws ServletException, IOException {
 		req.setAttribute("success", message);
@@ -98,46 +100,45 @@ public class RegisterController extends HttpServlet {
 		req.getRequestDispatcher("/WEB-INF/pages/Register.jsp").forward(req, resp);
 		System.out.print(message);
 	}
-	
+
 	private String validateUserModel(UserModel user) {
-	    if (user.getUsername() == null || !ValidationUtil.isAlphanumeric(user.getUsername())) {
-	        return "Username must contain only alpha-numeric values.";
-	    }
+		if (user.getUsername() == null || !ValidationUtil.isAlphanumeric(user.getUsername())) {
+			return "Username must contain only alpha-numeric values.";
+		}
 
-	    if (user.getUserEmail() == null || !ValidationUtil.isEmail(user.getUserEmail())) {
-	        return "Please enter a valid email address.";
-	    }
+		if (user.getUserEmail() == null || !ValidationUtil.isEmail(user.getUserEmail())) {
+			return "Please enter a valid email address.";
+		}
 
-	    if (user.getPassword() == null || !ValidationUtil.isValidPassword(user.getPassword())) {
-	        return "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
-	    }
+		if (user.getPassword() == null || !ValidationUtil.isValidPassword(user.getPassword())) {
+			return "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+		}
 
-	    if (user.getGender() == null || !ValidationUtil.isGenderMatches(user.getGender())) {
-	        return "Gender must be either 'male' or 'female'.";
-	    }
+		if (user.getGender() == null || !ValidationUtil.isGenderMatches(user.getGender())) {
+			return "Gender must be either 'male' or 'female'.";
+		}
 
-	    if (user.getDob() == null || !ValidationUtil.isValidAge(user.getDob())) {
-	        return "Gamer must be above 10 years";
-	    }
+		if (user.getDob() == null || !ValidationUtil.isValidAge(user.getDob())) {
+			return "Gamer must be above 10 years";
+		}
 
-	    return null; 
+		return null;
 	}
 
-	
 	/**
 	 * Extracts User credentials from the Registration form
 	 * 
-	 * @return UserModel 
+	 * @return UserModel
 	 */
 	private UserModel extractUserModel(HttpServletRequest request) {
-	    UserModel user = new UserModel();
-	    user.setUsername(request.getParameter("username"));
-	    user.setDob(Date.valueOf(request.getParameter("dob")));
-	    user.setGender(request.getParameter("gender"));
-	    user.setUserEmail(request.getParameter("user-email"));
-	    user.setPassword( request.getParameter("password"));
-	    user.setCreatedDate(new Date(System.currentTimeMillis()));
-	    return user;
+		UserModel user = new UserModel();
+		user.setUsername(request.getParameter("username"));
+		user.setDob(Date.valueOf(request.getParameter("dob")));
+		user.setGender(request.getParameter("gender"));
+		user.setUserEmail(request.getParameter("user-email"));
+		user.setPassword(request.getParameter("password"));
+		user.setCreatedDate(new Date(System.currentTimeMillis()));
+		return user;
 	}
 
 }

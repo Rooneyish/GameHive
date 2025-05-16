@@ -51,7 +51,7 @@ public class StringUtil {
 	public static final String MESSAGE_ERROR_CREATE_ACCOUNT = "Account for this username is not registered! Please create a new account.";
 	public static final String MESSAGE_ERROR_USER_ROLE_NOT_FOUND = "User Role is undefine.";
     public static final String MESSAGE_ERROR_GENERIC = "An unexpected error occurred. Please try again later.";
-    public static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
+    public static final String ERROR_MESSAGE_ATTRIBUTE = "error";
     public static final String USER_COOKIE_NAME = "gamehiveUser";
 	
 	// Other Messages

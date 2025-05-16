@@ -127,7 +127,7 @@
 					<div>
 						<label for="edit-gender">Gender</label>
 						<div class="radio-buttons">
-							<input type="radio" id="e-male" name="edit-gender" value="male">
+							<input type="radio" id="e-male" name="edit-gender" value="male" required>
 							<label for="e-male">Male</label> <input type="radio"
 								id="e-female" name="edit-gender" value="female"><label
 								for="e-female">Female</label> <input type="radio" id="e-other"

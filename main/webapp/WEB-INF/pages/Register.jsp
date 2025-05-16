@@ -30,7 +30,6 @@
     transition: opacity 0.3s ease;
 }
 
-/* Message Box Styles */
 .overlay-message {
     background-color: white;
     padding: 20px;

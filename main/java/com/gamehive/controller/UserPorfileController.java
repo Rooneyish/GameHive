@@ -60,8 +60,15 @@ public class UserPorfileController extends HttpServlet {
 	        return;
 	    }
 		
-		UserProfileService userProfilService = new UserProfileService();
-		boolean isPasswordCorrect = userProfilService.verifyUser(username, password);
+		UserProfileService userProfileService = new UserProfileService();
+		
+	    if (userProfileService.isEmailTakenByAnotherUser(email, currentUser)) {
+	        request.setAttribute("error", "This email address is already used by another account.");
+	        request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
+	        return;
+	    }
+		
+		boolean isPasswordCorrect = userProfileService.verifyUser(username, password);
 
 		if (!isPasswordCorrect) {
 			request.setAttribute("error", "Incorrect password. Profile not updated.");
@@ -75,7 +82,7 @@ public class UserPorfileController extends HttpServlet {
 	    user.setDob(dob);
 	    user.setGender(gender);
 	    
-	    UserModel updatedUser = userProfilService.updateUserInfo(user);
+	    UserModel updatedUser = userProfileService.updateUserInfo(user);
 	    
 	    if (updatedUser != null) {
 	        request.setAttribute("success", "Profile updated successfully.");
@@ -86,4 +93,5 @@ public class UserPorfileController extends HttpServlet {
 
 	    request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
 	}
+	
 }
