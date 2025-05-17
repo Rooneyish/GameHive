@@ -54,11 +54,11 @@
 							type="radio" name="option" value="Action" /> Action</label> <label><input
 							type="radio" name="option" value="Role-Playing" /> Role-Playing</label>
 						<label><input type="radio" name="option" value="Adventure" />
-							Adventure</label> <label><input type="radio"
-							name="option" value="Sports" /> <em>Sports</em></label> <label><input
-							type="radio" name="option" value="Racing/Driving" /> Racing/Driving</label>
-						<label><input type="radio" name="option" value="Puzzle" />
-							<em>Puzzle</em></label>
+							Adventure</label> <label><input type="radio" name="option"
+							value="Sports" /> <em>Sports</em></label> <label><input
+							type="radio" name="option" value="Racing/Driving" />
+							Racing/Driving</label> <label><input type="radio" name="option"
+							value="Puzzle" />Puzzle</label>
 
 					</div>
 
@@ -97,40 +97,49 @@
 					</c:otherwise>
 				</c:choose>
 
-				<c:if test="${empty gameList}">
-					<p style="color:var(--primaryF-color);">No games available based on the filter or search.</p>
-				</c:if>
+				<div class="games-scroll-container">
+					<c:if test="${empty gameList}">
+						<p style="color: var(--primaryF-color);">No games available
+							based on the filter or search.</p>
+					</c:if>
 
-				<c:if test="${not empty gameList}">
-					<c:forEach var="game" items="${gameList}" varStatus="status">
-						<c:if test="${status.index % 3 ==0 }">
-							<div class="row">
-						</c:if>
-						<div class="game-card">
-							<div class="game-details">
-								<h3>${game.gameTitle}</h3>
-								<p class="game-description">${game.gameDescription}</p>
-								<p class="game-developers">
-									<strong>Developers:</strong> ${game.gameDevelopers}
-								</p>
-								<p>
-									<strong>Platforms:</strong> ${game.gamePlatforms}
-								</p>
-								<p>
-									<strong>Genres:</strong> ${game.gameGenres}
-								</p>
-								<p>
-									<strong>Price:</strong> $${game.gamePrice}
-								</p>
-								<button class="review-btn">Review Game</button>
+					<c:if test="${not empty gameList}">
+						<c:forEach var="game" items="${gameList}" varStatus="status">
+							<c:if test="${status.index % 3 == 0}">
+								<div class="row">
+							</c:if>
+
+							<div class="game-card">
+								<div class="game-details">
+									<h3>${game.gameTitle}</h3>
+									<p class="game-description">${game.gameDescription}</p>
+									<p class="game-developers">
+										<strong>Developers:</strong> ${game.gameDevelopers}
+									</p>
+									<p>
+										<strong>Platforms:</strong> ${game.gamePlatforms}
+									</p>
+									<p>
+										<strong>Genres:</strong> ${game.gameGenres}
+									</p>
+									<p>
+										<strong>Price:</strong> $${game.gamePrice}
+									</p>
+									<button class="review-btn">Review Game</button>
+								</div>
 							</div>
-						</div>
-						<c:if test="${status.index % 3 == 2 || status.last}">
+
+							<c:if test="${status.index % 3 == 2 || status.last}">
+				</div>
+				<!-- close .row -->
+				</c:if>
+				</c:forEach>
+				</c:if>
 			</div>
-			</c:if>
-			</c:forEach>
-			</c:if>
+			<!-- close .games-scroll-container -->
 		</div>
+		<!-- close .games-panel -->
+
 		</div>
 	</section>
 

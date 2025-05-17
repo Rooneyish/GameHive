@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.gamehive.config.DBconfig;
 import com.gamehive.model.UserModel;
 import com.gamehive.util.PasswordUtil;
+import com.gamehive.util.ValidationUtil;
 
 /**
  * @author Ronish Prajapati LUM-ID 23048584
@@ -32,6 +33,20 @@ public class UserProfileService {
 			return null;
 		}
 
+	    if (user.getUserEmail() != null && !user.getUserEmail().isEmpty()) {
+	        if (!ValidationUtil.isEmail(user.getUserEmail())) {
+	            System.err.println("Invalid email format");
+	            return null; 
+	        }
+	    }
+
+	    if (user.getDob() != null) {
+	        if (!ValidationUtil.isValidAge(user.getDob())) {
+	            System.err.println("User must be above 10 years old");
+	            return null; 
+	        }
+	    }
+	    
 		String selectQuery = "SELECT * FROM user_information WHERE username = ?";
 		String updateQuery = "UPDATE user_information SET user_email=?, date_of_birth=?, gender=? WHERE username = ?";
 

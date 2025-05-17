@@ -3,7 +3,7 @@
 html, body {
 	height: 100%;
 	margin: 0;
-	overflow: hidden;
+	overflow: auto;
 }
 
 body {
@@ -125,6 +125,13 @@ section::before {
 	width: 80%;
 	margin: 0 auto;
 	display: flex;
+	height: 88.7vh;
+}
+
+.games-scroll-container {
+	flex-grow: 1;
+	overflow-y: auto;
+	padding-right: 10px;
 }
 
 .filters {
@@ -139,7 +146,6 @@ section::before {
 	flex-direction: column;
 	justify-content: space-between;
 }
-
 
 .filters h4 {
 	font-family: var(--tertiary-font);
@@ -173,8 +179,10 @@ section::before {
 	padding: 2rem;
 	border: 1px solid var(--primaryF-color);
 	border-left: none;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
-
 
 .row {
 	display: flex;
@@ -185,50 +193,52 @@ section::before {
 }
 
 .game-card {
-    width: calc(33.333% - 10px); 
-    box-sizing: border-box;
-    border: 2px solid var(--primaryF-color);
-    border-radius: 8px;
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    min-height: 200px; 
-    justify-content: space-between;
-    color: var(--primaryF-color);
+	width: calc(33.333% - 10px);
+	box-sizing: border-box;
+	border: 2px solid var(--primaryF-color);
+	border-radius: 8px;
+	background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	min-height: 200px;
+	justify-content: space-between;
+	color: var(--primaryF-color);
 }
 
 .game-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: var(--primarF-color); 
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	color: var(--primarF-color);
 }
 
 .game-details h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 24px;
+	margin: 0 0 0.5rem 0;
+	font-size: 24px;
 }
 
 .game-description {
-    font-size: 16px;
-    margin-bottom: 0.5rem;
-    overflow: hidden;
-    flex-grow: 1; 
+	font-size: 16px;
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+	flex-grow: 1;
 }
-.game-developers{
+
+.game-developers {
 	overflow: hidden;
 }
+
 .review-btn {
-    margin-top: 10px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    background: var(--primaryF-color);
-    color: var(--primary-color);
-    cursor: pointer;
-    align-self: flex-end;
+	margin-top: 10px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	background: var(--primaryF-color);
+	color: var(--primary-color);
+	cursor: pointer;
+	align-self: flex-end;
 }
 
 .logout-button a {
@@ -246,4 +256,3 @@ section::before {
 .logout-button a:hover {
 	background-color: #cc0000;
 }
-

@@ -65,10 +65,9 @@ public class AddGameController extends HttpServlet {
 			boolean success = service.insertGame(game);
 
 			if (success) {
-				response.sendRedirect("admin?success=true");
+				response.sendRedirect("admin?success=Game+Added+Successfully");
 			} else {
-				request.setAttribute("error", "Failed to add game.");
-				request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);
+				handleError(request, response, "Game could not be added.");
 			}
 
 		} catch (Exception e) {
@@ -76,6 +75,13 @@ public class AddGameController extends HttpServlet {
 			request.setAttribute("error", "Invalid input.");
 			request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);
 		}
+	}
+
+	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
+			throws ServletException, IOException {
+		req.setAttribute("error", message);
+		req.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(req, resp);
+		System.out.print(message);
 	}
 
 }

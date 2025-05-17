@@ -87,6 +87,16 @@ public class AdminController extends HttpServlet {
 		int totalFreeGames = gameService.getNumberOfFreeGames();
 		int totalUsers = adminService.getNumberOfUsers();
 
+		String success = request.getParameter("success");
+	    if (success != null && !success.isEmpty()) {
+	        request.setAttribute("success", success);
+	    }
+	    
+	    String error = request.getParameter("error");
+	    if (error != null && !error.isEmpty()) {
+	        request.setAttribute("error", error);
+	    }
+		
 		request.setAttribute("totalUsers", totalUsers);
 		request.setAttribute("totalGames", totalGames);
 		request.setAttribute("totalDevelopers", totalDevelopers);

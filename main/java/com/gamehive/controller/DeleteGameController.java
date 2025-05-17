@@ -51,7 +51,7 @@ public class DeleteGameController extends HttpServlet {
 			boolean isDeleted = gameService.deleteGameById(gameId);
 			
 			if (isDeleted) {
-                response.sendRedirect("admin?msg=Game+deleted+successfully");
+                response.sendRedirect("admin?success=Game+deleted+successfully");
             } else {
                 response.sendRedirect("admin?error=Failed+to+delete+game");
             }

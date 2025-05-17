@@ -74,7 +74,7 @@ public class UpdateGameController extends HttpServlet {
 			boolean success = service.updateGame(game);
 
 			if (success) {
-				response.sendRedirect("admin?success=true");
+				response.sendRedirect("admin?success=Game+update+successfull!");
 			} else {
 				request.setAttribute("error", "Failed to update game.");
 				request.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(request, response);

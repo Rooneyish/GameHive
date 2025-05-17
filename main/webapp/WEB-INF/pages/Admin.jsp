@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.gamehive.model.GameModel"%>
 <%@ page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,12 +16,29 @@
 	href="${pageContext.request.contextPath}/css/AddNewGame.css" />
 </head>
 <body>
+	<c:if test="${not empty error}">
+		<div class="overlay" style="display: flex;">
+			<div class="overlay-message">
+				<p class="error-message">${error}</p>
+				<button onclick="this.closest('.overlay').style.display='none'">Close</button>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${not empty success}">
+		<div class="overlay" style="display: flex;">
+			<div class="overlay-message">
+				<p class="success-message">${success}</p>
+				<button onclick="this.closest('.overlay').style.display='none'">Close</button>
+			</div>
+		</div>
+	</c:if>
 	<header>
 		<div class="admin-header">
 			<div>
 				<a href="admin"><img alt="admin-brand-logo"
 					src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
-				
+
 				<div class="admin-profile">
 					<img alt="Admin Profile"
 						src="${pageContext.request.contextPath}/resources/images/admin.png">
@@ -75,7 +93,7 @@
 				<div class="admin-table">
 					<div class="admin-games">
 						<h3>Games</h3>
-						<div style="display: flex; justify-content: space-between;">
+						<div style="display: flex; justify-content: space-between; gap: 20px;">
 							<form method="get" action="admin">
 								<div class="sort-container">
 									<label for="sortOptions">Sort by:</label> <select
@@ -92,7 +110,6 @@
 									</select>
 								</div>
 							</form>
-
 							<a href="#" id="openAddGameModal">Add Games</a>
 						</div>
 					</div>
