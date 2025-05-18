@@ -48,26 +48,48 @@ public class AddGameController extends HttpServlet {
 		String publisher = request.getParameter("publisher");
 		String developers = request.getParameter("developers");
 		String releasedDate = request.getParameter("releasedDate");
-		String rating = request.getParameter("rating");
-		String price = request.getParameter("price");
+		float rating = Float.parseFloat(request.getParameter("rating"));
+		float price = Float.parseFloat(request.getParameter("price"));
 
 		String[] genres = request.getParameterValues("genre[]");
 		String[] platforms = request.getParameterValues("platform[]");
 
 		String genreStr = String.join(",", genres != null ? genres : new String[0]);
 		String platformStr = String.join(",", platforms != null ? platforms : new String[0]);
+		
+		try {
+		    if (rating > 5.0 || rating < 0.0) {
+		        response.sendRedirect("admin?error=Rating+should+be+between+0+and+5");
+		        return;
+		    }
+		} catch (NumberFormatException e) {
+		    response.sendRedirect("admin?error=Invalid+rating+value");
+		    return;
+		}
+		
+		try {
+		    if (price < 0.0) {
+		        response.sendRedirect("admin?error=Price+cannot+be+negative.");
+		        return;
+		    }
+		} catch (NumberFormatException e) {
+		    response.sendRedirect("admin?error=Invalid+rating+value");
+		    return;
+		}
 
 		try {
 			GameModel game = new GameModel(0, title, description, publisher, java.sql.Date.valueOf(releasedDate),
-					Float.parseFloat(price), Float.parseFloat(rating), developers, genreStr, platformStr);
+					price, rating, developers, genreStr, platformStr);
 
 			GameService service = new GameService();
 			boolean success = service.insertGame(game);
 
-			if (success) {
-				response.sendRedirect("admin?success=Game+Added+Successfully");
+			if (Boolean.TRUE.equals(success)) {
+			    response.sendRedirect("admin?success=Game+Added+Successfully");
+			} else if (Boolean.FALSE.equals(success)) {
+			    handleError(request, response, "A game with this title already exists.");
 			} else {
-				handleError(request, response, "Game could not be added.");
+			    handleError(request, response, "An error occurred while adding the game. Please check the inputs.");
 			}
 
 		} catch (Exception e) {
@@ -79,6 +101,8 @@ public class AddGameController extends HttpServlet {
 
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
 			throws ServletException, IOException {
+		GameService gameService = new GameService();
+		req.setAttribute("games", gameService.getAllGameInfo()); 
 		req.setAttribute("error", message);
 		req.getRequestDispatcher("/WEB-INF/pages/Admin.jsp").forward(req, resp);
 		System.out.print(message);
