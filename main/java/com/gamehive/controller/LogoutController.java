@@ -33,13 +33,12 @@ public class LogoutController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.print("Check Logout doGet");
 		Object session= SessionUtil.getAttribute(request, "username");
-		System.out.print(session);
 		
 		if(session!= null) {
 			SessionUtil.invalidateSession(request);
 		}
+		System.out.println(session + "is logged out successfully.");
 		
 		response.sendRedirect(request.getContextPath()+"/home");
 	}
