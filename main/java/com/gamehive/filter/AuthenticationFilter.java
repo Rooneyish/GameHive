@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import com.gamehive.util.SessionUtil;
 import com.gamehive.util.StringUtil;
+
 /**
  * @author Ronish Prajapati
  * LUM-ID 23048584
@@ -53,6 +54,23 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 * 
+	 *      Filters incoming HTTP requests to enforce access control and role-based
+	 *      navigation.
+	 * 
+	 *      Allows unauthenticated access to static resources and certain public
+	 *      pages (contact, about, login, register, home). Redirects unauthenticated
+	 *      users to the root page for protected resources. Prevents logged-in users
+	 *      from accessing login or register pages by redirecting them to their
+	 *      role-specific portals. Enforces role-based redirects if a user tries to
+	 *      access a portal not matching their role (admin vs gamer).
+	 * 
+	 * @param request  the ServletRequest to filter, cast to HttpServletRequest
+	 * @param response the ServletResponse to filter, cast to HttpServletResponse
+	 * @param chain    the FilterChain to pass control to the next filter or
+	 *                 resource
+	 * @throws IOException      if an I/O error occurs during filtering
+	 * @throws ServletException if a servlet-specific error occurs during filtering
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -80,11 +98,10 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		Object role = SessionUtil.getAttribute(req, "role");
 
 		boolean isLoggedIn = username != null;
-		
-		
+
 		if (!isLoggedIn) {
-			if (uri.endsWith(CONTACT)| uri.endsWith(ABOUT) ||uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(req.getContextPath() + "/")
-					|| uri.equals("/")) {
+			if (uri.endsWith(CONTACT) | uri.endsWith(ABOUT) || uri.endsWith(LOGIN) || uri.endsWith(REGISTER)
+					|| uri.equals(req.getContextPath() + "/") || uri.equals("/")) {
 				chain.doFilter(request, response);
 				return;
 			} else {

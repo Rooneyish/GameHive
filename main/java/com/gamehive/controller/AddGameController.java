@@ -1,5 +1,8 @@
 package com.gamehive.controller;
-
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -99,6 +102,17 @@ public class AddGameController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Handles errors that occur during game addition.
+	 * Retrieves the existing game list and forwards the request to the Admin page
+	 * with an appropriate error message.
+	 * 
+	 * @param req     The HttpServletRequest object.
+	 * @param resp    The HttpServletResponse object.
+	 * @param message The error message to be displayed.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an I/O error occurs.
+	 */
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
 			throws ServletException, IOException {
 		GameService gameService = new GameService();

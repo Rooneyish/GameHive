@@ -10,8 +10,7 @@ import com.gamehive.config.DBconfig;
 import com.gamehive.model.GameModel;
 
 /**
- * @author Ronish Prajapati 
- * LUM-ID 23048584
+ * @author Ronish Prajapati LUM-ID 23048584
  */
 
 public class AdminService {
@@ -25,7 +24,13 @@ public class AdminService {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Retrieves the total number of users from the database.
+	 *
+	 * @return the count of users; returns 0 if the database connection is
+	 *         unavailable or query fails
+	 */
 	public int getNumberOfUsers() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -36,8 +41,8 @@ public class AdminService {
 
 		try (PreparedStatement stmt = dbConnect.prepareStatement(selectQuery)) {
 			ResultSet result = stmt.executeQuery();
-			
-			if(result.next()) {
+
+			if (result.next()) {
 				return result.getInt("number_of_users");
 			}
 		} catch (SQLException e) {

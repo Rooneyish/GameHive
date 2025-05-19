@@ -33,6 +33,15 @@ public class DeleteGameController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * Handles HTTP POST requests to delete a game by its ID.
+	 * Retrieves the game ID from the request, validates it, and calls the service to delete the game.
+	 * Redirects to the admin page with appropriate success or error messages.
+	 *
+	 * @param request  The HttpServletRequest object containing the game ID parameter.
+	 * @param response The HttpServletResponse object used to redirect with result messages.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an input or output error occurs.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

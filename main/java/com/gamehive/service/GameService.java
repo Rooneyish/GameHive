@@ -28,6 +28,14 @@ public class GameService {
 		}
 	}
 
+	/**
+	 * Searches for games whose titles contain the specified search value
+	 * (case-insensitive).
+	 *
+	 * @param searchValue the string to search for within game titles
+	 * @return a list of GameModel objects matching the search criteria; empty list
+	 *         if none found or on error
+	 */
 	public List<GameModel> searchGames(String searchValue) {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -59,6 +67,12 @@ public class GameService {
 		return games;
 	}
 
+	/**
+	 * Retrieves the total number of games stored in the database.
+	 *
+	 * @return the count of games as an integer, or 0 if a database connection is
+	 *         unavailable or an error occurs
+	 */
 	public int getNumberOfGames() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -79,6 +93,12 @@ public class GameService {
 		return 0;
 	}
 
+	/**
+	 * Retrieves the total number of developers stored in the database.
+	 *
+	 * @return the count of developers as an integer, or 0 if the database
+	 *         connection is unavailable or an error occurs
+	 */
 	public int getNumberOfDevelopers() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -99,6 +119,13 @@ public class GameService {
 		return 0;
 	}
 
+	/**
+	 * Retrieves the total number of free games (games with a price of 0) in the
+	 * database.
+	 *
+	 * @return the count of free games as an integer, or 0 if the database
+	 *         connection is unavailable or an error occurs
+	 */
 	public int getNumberOfFreeGames() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -119,6 +146,14 @@ public class GameService {
 		return 0;
 	}
 
+	/**
+	 * Retrieves a list of all games with their detailed information from the
+	 * database. This includes game ID, title, description, publisher, developers,
+	 * genres, platforms, release date, rating, and price.
+	 *
+	 * @return a List of GameModel objects representing all games in the database,
+	 *         or null if the database connection is not available.
+	 */
 	public List<GameModel> getAllGameInfo() {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -154,6 +189,17 @@ public class GameService {
 		return games;
 	}
 
+	/**
+	 * Adds a new game and its related genres, platforms, and developers to the
+	 * database.
+	 * 
+	 * Inserts the game details first, then links genres, platforms, and developers
+	 * using bridge tables. If a developer doesn't exist, it will be created.
+	 * 
+	 * @param game The game data to insert
+	 * @return true if the insert was successful, false if the game title already
+	 *         exists, null on error
+	 */
 	public Boolean insertGame(GameModel game) {
 		if (dbConnect == null) {
 			System.err.println("Database connection is not available");
@@ -247,6 +293,12 @@ public class GameService {
 		}
 	}
 
+	/**
+	 * Retrieves the genre ID from the database for a given genre name.
+	 * 
+	 * @param genreName The name of the genre to look up
+	 * @return The genre ID if found, otherwise -1
+	 */
 	private int getGenreIdByName(String genreName) {
 		String sql = "SELECT genre_id FROM genres WHERE genre = ?";
 		try (PreparedStatement stmt = dbConnect.prepareStatement(sql)) {
@@ -267,6 +319,12 @@ public class GameService {
 		}
 	}
 
+	/**
+	 * Retrieves the platform ID from the database for a given platform name.
+	 * 
+	 * @param platformName The name of the platform to look up
+	 * @return The platform ID if found, otherwise -1
+	 */
 	private int getPlatformIdByName(String platformName) {
 		String sql = "SELECT platform_id FROM platforms WHERE platform = ?";
 		try (PreparedStatement stmt = dbConnect.prepareStatement(sql)) {
@@ -287,6 +345,13 @@ public class GameService {
 		}
 	}
 
+	/**
+	 * Retrieves the developer ID for the given developer name if it exists,
+	 * otherwise inserts a new developer and returns the new ID.
+	 * 
+	 * @param devName The developer name to search or insert
+	 * @return The developer ID if found or created, otherwise -1 on error
+	 */
 	private int getOrCreateDeveloperId(String devName) {
 		String selectSQL = "SELECT developer_id FROM developers WHERE developer = ?";
 		String insertSQL = "INSERT INTO developers (developer) VALUES (?)";
@@ -330,6 +395,12 @@ public class GameService {
 		}
 	}
 
+	/**
+	 * Deletes a game from the database by its game ID.
+	 * 
+	 * @param gameId The ID of the game to delete
+	 * @return true if the game was deleted successfully, false otherwise
+	 */
 	public boolean deleteGameById(int gameId) {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
@@ -346,6 +417,15 @@ public class GameService {
 			return false;
 		}
 	}
+
+	/**
+	 * Updates a game record and its related genres, platforms, and developers in
+	 * the database.
+	 *
+	 * @param game The GameModel object containing updated game details and
+	 *             relations
+	 * @return true if the update was successful; false otherwise
+	 */
 
 	public Boolean updateGame(GameModel game) {
 		if (dbConnect == null) {

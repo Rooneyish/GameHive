@@ -9,10 +9,10 @@ import com.gamehive.config.DBconfig;
 import com.gamehive.model.LoginModel;
 import com.gamehive.model.UserModel;
 import com.gamehive.util.PasswordUtil;
+
 /**
- * @author Ronish Prajapati
- * LUM-ID 23048584
- * */
+ * @author Ronish Prajapati LUM-ID 23048584
+ */
 
 public class LoginService {
 	private Connection dbConnect;
@@ -26,12 +26,22 @@ public class LoginService {
 		}
 	}
 
+	/**
+	 * Attempts to log in a user by validating the username and password against the
+	 * database.
+	 *
+	 * @param loginModel Contains the username and password input by the user
+	 *                   attempting login.
+	 * @return A UserModel object with user details if login is successful; null
+	 *         otherwise.
+	 */
+
 	public UserModel loginUser(LoginModel loginModel) {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
 			return null;
 		}
-		
+
 		String query = "SELECT username, user_password, user_role, user_email, date_of_birth, gender, created_date "
 				+ "FROM user_information WHERE username=?";
 
@@ -42,7 +52,7 @@ public class LoginService {
 
 			if (result.next()) {
 				String dbUsername = result.getString("username");
-				String dbPasswordHash = result.getString("user_password"); 
+				String dbPasswordHash = result.getString("user_password");
 				String dbUserRole = result.getString("user_role");
 
 				boolean passwordMatches = false;
@@ -51,7 +61,7 @@ public class LoginService {
 				} catch (Exception e) {
 					System.err.println("Error during password decryption/validation for user " + dbUsername + ": "
 							+ e.getMessage());
-					return null; 
+					return null;
 				}
 
 				if (passwordMatches) {
@@ -61,24 +71,24 @@ public class LoginService {
 					loggedInUser.setUsername(dbUsername);
 					loggedInUser.setUserRole(dbUserRole);
 					loggedInUser.setUserEmail(result.getString("user_email"));
-					loggedInUser.setDob(result.getDate("date_of_birth")); 
+					loggedInUser.setDob(result.getDate("date_of_birth"));
 					loggedInUser.setGender(result.getString("gender"));
-					loggedInUser.setCreatedDate(result.getDate("created_date")); 
+					loggedInUser.setCreatedDate(result.getDate("created_date"));
 
-					return loggedInUser; 
+					return loggedInUser;
 
 				} else {
 					System.out.println("Password validation failed for user: " + dbUsername);
-					return null; 
+					return null;
 				}
 			} else {
 				System.out.println("User not found: " + loginModel.getUsername());
-				return null; 
+				return null;
 			}
 		} catch (SQLException e) {
 			System.err.println("SQL Error during login for user " + loginModel.getUsername() + ": " + e.getMessage());
 			e.printStackTrace();
-			return null; 
+			return null;
 		}
 	}
 }

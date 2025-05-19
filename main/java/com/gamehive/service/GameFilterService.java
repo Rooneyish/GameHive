@@ -27,6 +27,13 @@ public class GameFilterService {
 		}
 	}
 
+	/**
+	 * Retrieves a list of games filtered by genre name (case-insensitive).
+	 *
+	 * @param genreName the genre name to filter games by
+	 * @return a list of GameModel objects matching the specified genre; empty list
+	 *         if none found or on error
+	 */
 	public List<GameModel> getGamesByGenre(String genreName) {
 		List<GameModel> games = new ArrayList<>();
 
@@ -50,7 +57,14 @@ public class GameFilterService {
 
 		return games;
 	}
-	
+
+	/**
+	 * Retrieves a list of games filtered by platform name (case-insensitive).
+	 *
+	 * @param platformName the platform name to filter games by
+	 * @return a list of GameModel objects matching the specified platform; empty
+	 *         list if none found or on error
+	 */
 	public List<GameModel> getGamesByPlatform(String platformName) {
 		List<GameModel> games = new ArrayList<>();
 

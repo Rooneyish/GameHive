@@ -1,4 +1,5 @@
 package com.gamehive.controller;
+
 /**
  * @author Ronish Prajapati
  * LUM-ID 23048584
@@ -34,10 +35,23 @@ public class UpdateGameController extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *      Handles HTTP POST requests to update an existing game's
+	 *      details.
+	 *
+	 *      Extracts game data and related arrays (genres, platforms) from the
+	 *      request parameters, constructs a GameModel object, and calls the
+	 *      GameService to perform the update. Redirects to the admin page with a
+	 *      success message if update succeeds, otherwise forwards back to the admin
+	 *      JSP with an error message.
+	 *
+	 * @param request  the HttpServletRequest containing the game update data
+	 * @param response the HttpServletResponse used to redirect or forward the
+	 *                 response
+	 * @throws ServletException if a servlet-specific error occurs during forwarding
+	 * @throws IOException      if an I/O error occurs during redirect or forwarding
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -58,7 +72,7 @@ public class UpdateGameController extends HttpServlet {
 		String platformStr = String.join(",", platforms != null ? platforms : new String[0]);
 
 		try {
-			GameModel game = new GameModel(gameId , title, description, publisher, java.sql.Date.valueOf(releasedDate),
+			GameModel game = new GameModel(gameId, title, description, publisher, java.sql.Date.valueOf(releasedDate),
 					Float.parseFloat(price), Float.parseFloat(rating), developers, genreStr, platformStr);
 
 			GameService service = new GameService();

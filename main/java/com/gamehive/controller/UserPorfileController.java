@@ -16,6 +16,10 @@ import java.sql.Date;
 
 import com.gamehive.model.UserModel;
 import com.gamehive.service.UserProfileService;
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 
 /**
  * Servlet implementation class UserPorfile
@@ -45,6 +49,20 @@ public class UserPorfileController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *      Handles HTTP POST requests for updating user profile
+	 *      information.
+	 *
+	 *      Retrieves updated user details from the request, verifies the current
+	 *      session user, checks if the new email is already taken by another user,
+	 *      and validates the user's password. If validation passes, updates the
+	 *      user profile using UserProfileService. Updates session attributes and
+	 *      sets success or error messages accordingly, then forwards to the
+	 *      UserProfile JSP page.
+	 *
+	 * @param request  the HttpServletRequest containing profile update data
+	 * @param response the HttpServletResponse used to forward the response
+	 * @throws ServletException if a servlet-specific error occurs during forwarding
+	 * @throws IOException      if an I/O error occurs during forwarding
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -56,20 +74,20 @@ public class UserPorfileController extends HttpServlet {
 		String password = request.getParameter("edit-password");
 
 		String currentUser = (String) request.getSession().getAttribute("username");
-	    
+
 		if (currentUser == null) {
-	        response.sendRedirect("login.jsp");
-	        return;
-	    }
-		
+			response.sendRedirect("login.jsp");
+			return;
+		}
+
 		UserProfileService userProfileService = new UserProfileService();
-		
-	    if (userProfileService.isEmailTakenByAnotherUser(email, currentUser)) {
-	        request.setAttribute("error", "This email address is already used by another account.");
-	        request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
-	        return;
-	    }
-		
+
+		if (userProfileService.isEmailTakenByAnotherUser(email, currentUser)) {
+			request.setAttribute("error", "This email address is already used by another account.");
+			request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
+			return;
+		}
+
 		boolean isPasswordCorrect = userProfileService.verifyUser(username, password);
 
 		if (!isPasswordCorrect) {
@@ -77,26 +95,26 @@ public class UserPorfileController extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
 			return;
 		}
-		
-	    UserModel user = new UserModel();
-	    user.setUsername(username);
-	    user.setUserEmail(email);
-	    user.setDob(dob);
-	    user.setGender(gender);
-	    
-	    UserModel updatedUser = userProfileService.updateUserInfo(user);
-	    
-	    if (updatedUser != null) {
-	        HttpSession session = request.getSession();
-	        session.setAttribute("user_email", updatedUser.getUserEmail());
-	        session.setAttribute("username", updatedUser.getUsername());
-	        request.setAttribute("success", "Profile updated successfully.");
-	        request.getSession().setAttribute("loggedUser", username); 
-	    } else {
-	        request.setAttribute("error", "Failed to update profile. Try again.");
-	    }
 
-	    request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
+		UserModel user = new UserModel();
+		user.setUsername(username);
+		user.setUserEmail(email);
+		user.setDob(dob);
+		user.setGender(gender);
+
+		UserModel updatedUser = userProfileService.updateUserInfo(user);
+
+		if (updatedUser != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("user_email", updatedUser.getUserEmail());
+			session.setAttribute("username", updatedUser.getUsername());
+			request.setAttribute("success", "Profile updated successfully.");
+			request.getSession().setAttribute("loggedUser", username);
+		} else {
+			request.setAttribute("error", "Failed to update profile. Try again.");
+		}
+
+		request.getRequestDispatcher("/WEB-INF/pages/UserProfile.jsp").forward(request, response);
 	}
-	
+
 }

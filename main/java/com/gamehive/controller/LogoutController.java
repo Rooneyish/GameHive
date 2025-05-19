@@ -30,6 +30,15 @@ public class LogoutController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * Handles GET requests to the /logout endpoint.
+	 * Invalidates the current user session and redirects to the home page.
+	 *
+	 * @param request  The HttpServletRequest object.
+	 * @param response The HttpServletResponse object.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an input or output error is detected.
+	 * 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

@@ -27,26 +27,34 @@ public class UserProfileService {
 		}
 	}
 
+	/**
+	 * Updates user profile information (email, date of birth, gender) in the
+	 * database. Performs validation on email format and user age before update.
+	 * 
+	 * @param user UserModel object containing new user information
+	 * @return The updated UserModel if successful, or null if failure occurs or
+	 *         validations fail
+	 */
 	public UserModel updateUserInfo(UserModel user) {
 		if (dbConnect == null) {
 			System.err.print("Database connection is not available");
 			return null;
 		}
 
-	    if (user.getUserEmail() != null && !user.getUserEmail().isEmpty()) {
-	        if (!ValidationUtil.isEmail(user.getUserEmail())) {
-	            System.err.println("Invalid email format");
-	            return null; 
-	        }
-	    }
+		if (user.getUserEmail() != null && !user.getUserEmail().isEmpty()) {
+			if (!ValidationUtil.isEmail(user.getUserEmail())) {
+				System.err.println("Invalid email format");
+				return null;
+			}
+		}
 
-	    if (user.getDob() != null) {
-	        if (!ValidationUtil.isValidAge(user.getDob())) {
-	            System.err.println("User must be above 10 years old");
-	            return null; 
-	        }
-	    }
-	    
+		if (user.getDob() != null) {
+			if (!ValidationUtil.isValidAge(user.getDob())) {
+				System.err.println("User must be above 10 years old");
+				return null;
+			}
+		}
+
 		String selectQuery = "SELECT * FROM user_information WHERE username = ?";
 		String updateQuery = "UPDATE user_information SET user_email=?, date_of_birth=?, gender=? WHERE username = ?";
 
@@ -63,13 +71,12 @@ public class UserProfileService {
 
 				String newGender = user.getGender() != null && !user.getGender().isEmpty() ? user.getGender()
 						: result.getString("gender");
-				
-	            updateStmt.setString(1, newEmail);
-	            updateStmt.setDate(2, newDob);
-	            updateStmt.setString(3, newGender);
-	            updateStmt.setString(4, user.getUsername());
+
+				updateStmt.setString(1, newEmail);
+				updateStmt.setDate(2, newDob);
+				updateStmt.setString(3, newGender);
+				updateStmt.setString(4, user.getUsername());
 			}
-			
 
 			int rowAffected = updateStmt.executeUpdate();
 
@@ -85,6 +92,14 @@ public class UserProfileService {
 		}
 	}
 
+	/**
+	 * Verifies if the entered password matches the stored password for the given
+	 * username. Password is decrypted and compared securely.
+	 * 
+	 * @param username        The username to verify
+	 * @param enteredPassword The password entered by the user
+	 * @return True if credentials match, false otherwise
+	 */
 	public boolean verifyUser(String username, String enteredPassword) {
 		System.out.println("Verify user called");
 		String sql = "SELECT username, user_password FROM user_information WHERE username = ?";
@@ -116,6 +131,14 @@ public class UserProfileService {
 		return false;
 	}
 
+	/**
+	 * Checks if the given email is already taken by another user other than the
+	 * current username. Useful to prevent duplicate emails during profile updates.
+	 * 
+	 * @param email           The email to check
+	 * @param currentUsername The username of the user performing the update
+	 * @return True if email is taken by another user, false otherwise
+	 */
 	public boolean isEmailTakenByAnotherUser(String email, String currentUsername) {
 		String query = "SELECT COUNT(*) FROM user_information WHERE user_email = ? AND username <> ?";
 		try (PreparedStatement stmt = dbConnect.prepareStatement(query)) {
@@ -131,26 +154,32 @@ public class UserProfileService {
 		return false;
 	}
 
+	/**
+	 * Retrieves user profile details by username.
+	 * 
+	 * @param username The username of the user
+	 * @return UserModel object containing profile details or null if user not found
+	 */
 	public UserModel getUserByUsername(String username) {
-	    if (dbConnect == null) {
-	        System.err.print("Database connection is not available");
-	        return null;
-	    }
-	    String query = "SELECT username, user_email, date_of_birth, gender FROM user_information WHERE username = ?";
-	    try (PreparedStatement stmt = dbConnect.prepareStatement(query)) {
-	        stmt.setString(1, username);
-	        ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            UserModel user = new UserModel();
-	            user.setUsername(rs.getString("username"));
-	            user.setUserEmail(rs.getString("user_email"));
-	            user.setDob(rs.getDate("date_of_birth"));
-	            user.setGender(rs.getString("gender"));
-	            return user;
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
+		if (dbConnect == null) {
+			System.err.print("Database connection is not available");
+			return null;
+		}
+		String query = "SELECT username, user_email, date_of_birth, gender FROM user_information WHERE username = ?";
+		try (PreparedStatement stmt = dbConnect.prepareStatement(query)) {
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				UserModel user = new UserModel();
+				user.setUsername(rs.getString("username"));
+				user.setUserEmail(rs.getString("user_email"));
+				user.setDob(rs.getDate("date_of_birth"));
+				user.setGender(rs.getString("gender"));
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

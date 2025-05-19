@@ -48,52 +48,83 @@ public class RegisterController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * 
+	 *      Handles user registration via HTTP POST.
+	 *
+	 *      Extracts user details from the request, validates input, encrypts the
+	 *      password, and attempts to register the user. Responds with success or
+	 *      error messages accordingly.
+	 *
+	 * @param request  the HttpServletRequest containing the registration data
+	 * @param response the HttpServletResponse used to send feedback to the client
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs while processing the request
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-		    UserModel userModel = extractUserModel(request);
+			UserModel userModel = extractUserModel(request);
 
-		    String validationError = validateUserModel(userModel);
-		    if (validationError != null) {
-		        handleError(request, response, validationError);
-		        return;
-		    }
+			String validationError = validateUserModel(userModel);
+			if (validationError != null) {
+				handleError(request, response, validationError);
+				return;
+			}
 
-		    String plainPassword = userModel.getPassword();
-		    String username = userModel.getUsername();
+			String plainPassword = userModel.getPassword();
+			String username = userModel.getUsername();
 
-		    String encryptedPassword = PasswordUtil.encrypt(username, plainPassword);
-		    userModel.setPassword(encryptedPassword);
+			String encryptedPassword = PasswordUtil.encrypt(username, plainPassword);
+			userModel.setPassword(encryptedPassword);
 
-		    Boolean isAdded = registerService.registerUser(userModel);
+			Boolean isAdded = registerService.registerUser(userModel);
 
-		    if (isAdded == null) {
-		        handleError(request, response,
-		            "We're currently experiencing technical issues. Please try again later.");
-		    } else if (isAdded) {
-		        handleSuccess(request, response,
-		            "Your account has been created successfully! You can now log in.",
-		            "/WEB-INF/pages/Login.jsp");
-		    } else {
-		        handleError(request, response,
-		            "The username or email address is already registered. Please try a different one.");
-		    }
+			if (isAdded == null) {
+				handleError(request, response,
+						"We're currently experiencing technical issues. Please try again later.");
+			} else if (isAdded) {
+				handleSuccess(request, response, "Your account has been created successfully! You can now log in.",
+						"/WEB-INF/pages/Login.jsp");
+			} else {
+				handleError(request, response,
+						"The username or email address is already registered. Please try a different one.");
+			}
 
 		} catch (Exception e) {
-		    e.printStackTrace();
-		    handleError(request, response,
-		        "An unexpected error occurred during registration. Please try again.");
+			e.printStackTrace();
+			handleError(request, response, "An unexpected error occurred during registration. Please try again.");
 		}
 	}
 
+	/**
+	 * Sets a success message as a request attribute and forwards the request and
+	 * response to the specified JSP page for display.
+	 *
+	 * @param req          the HttpServletRequest object
+	 * @param resp         the HttpServletResponse object
+	 * @param message      the success message to display
+	 * @param redirectPage the path to the JSP page to forward to
+	 * @throws ServletException if a servlet-specific error occurs during forwarding
+	 * @throws IOException      if an I/O error occurs during forwarding
+	 */
 	private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
 			throws ServletException, IOException {
 		req.setAttribute("success", message);
 		req.getRequestDispatcher(redirectPage).forward(req, resp);
 	}
 
+	/**
+	 * Sets an error message as a request attribute and forwards the request and
+	 * response to the registration JSP page for error display. Also logs the error
+	 * message to the server console.
+	 *
+	 * @param req     the HttpServletRequest object
+	 * @param resp    the HttpServletResponse object
+	 * @param message the error message to display and log
+	 * @throws ServletException if a servlet-specific error occurs during forwarding
+	 * @throws IOException      if an I/O error occurs during forwarding
+	 */
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
 			throws ServletException, IOException {
 		req.setAttribute("error", message);
@@ -101,6 +132,17 @@ public class RegisterController extends HttpServlet {
 		System.out.print(message);
 	}
 
+	/**
+	 * Validates the fields of the given UserModel.
+	 * 
+	 * Checks that username is alphanumeric, email is valid, password meets
+	 * complexity rules, gender is either 'male' or 'female', and age is above 10
+	 * years.
+	 * 
+	 * @param user the UserModel to validate
+	 * @return a validation error message if any validation fails; otherwise, null
+	 *         if all fields are valid
+	 */
 	private String validateUserModel(UserModel user) {
 		if (user.getUsername() == null || !ValidationUtil.isAlphanumeric(user.getUsername())) {
 			return "Username must contain only alpha-numeric values.";
@@ -126,10 +168,13 @@ public class RegisterController extends HttpServlet {
 	}
 
 	/**
-	 * Extracts User credentials from the Registration form
-	 * 
-	 * @return UserModel
+	 * Extracts user registration details from the HttpServletRequest and populates
+	 * a UserModel object.
+	 *
+	 * @param request the HttpServletRequest containing user input parameters
+	 * @return a UserModel object populated with the extracted data
 	 */
+
 	private UserModel extractUserModel(HttpServletRequest request) {
 		UserModel user = new UserModel();
 		user.setUsername(request.getParameter("username"));

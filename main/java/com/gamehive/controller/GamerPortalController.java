@@ -1,15 +1,14 @@
 package com.gamehive.controller;
-
+/**
+ * @author Ronish Prajapati
+ * LUM-ID 23048584
+ * */
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-/**
- * @author Ronish Prajapati
- * LUM-ID 23048584
- * */
 import java.util.List;
 
 import com.gamehive.model.GameModel;
@@ -33,6 +32,15 @@ public class GamerPortalController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Handles HTTP GET requests to the /gamerportal endpoint.
+	 * Supports searching for games by title or filtering by genre/platform.
+	 * Sets the resulting game list and user inputs as request attributes
+	 * and forwards the request to the GamerPortal JSP page for display.
+	 *
+	 * @param request  The HttpServletRequest object containing search/filter parameters.
+	 * @param response The HttpServletResponse object used to forward data to the JSP.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an input or output error occurs.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

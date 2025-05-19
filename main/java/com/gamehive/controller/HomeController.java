@@ -12,10 +12,6 @@ import java.io.PrintWriter;
  * LUM-ID 23048584
  * */
 
-/**
- * @author Ronish Prajapati 
- * LMU-ID: 23048584
- */
 @WebServlet(asyncSupported = true, urlPatterns = { "/home", "/" })
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -49,6 +49,14 @@ public class LogInController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * Handles POST requests for logging in.
+	 * Validates user credentials and starts a session on successful login.
+	 * Redirects the user to the appropriate dashboard based on role.
+	 *
+	 * @param request  The HttpServletRequest object.
+	 * @param response The HttpServletResponse object.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an input or output error is detected.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

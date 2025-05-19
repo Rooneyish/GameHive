@@ -38,6 +38,15 @@ public class AdminController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 *      
+	 * Handles HTTP GET requests for the admin dashboard.
+	 * Retrieves game statistics and sorted game list based on the provided sort option.
+	 * Passes data to Admin.jsp for rendering the dashboard view.
+	 * 
+	 * @param request  The HttpServletRequest object containing client request parameters.
+	 * @param response The HttpServletResponse object for sending the response.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an input or output error is detected.     
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
